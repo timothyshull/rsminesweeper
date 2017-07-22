@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 
 class DisplayMenu extends Component {
@@ -38,8 +39,9 @@ class DisplayMenu extends Component {
     }
 }
 
+// TODO: move this constants file
 DisplayMenu.propTypes = {
-    onClose: React.PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
 };
 
 export default DisplayMenu

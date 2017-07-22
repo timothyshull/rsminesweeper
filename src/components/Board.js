@@ -15,14 +15,15 @@ class Board extends Component {
                 <table className="Board" cellSpacing={0} cellPadding={0}>
                     {board.map(row => {
                         return (
-                        <tr>
-                            {row.map((cell) => {
-                                cell.onClick = () => {
-                                };
-                                return (<Cell {...cell}/>);
-                            })}
-                        </tr>
-                    )})}
+                            <tr>
+                                {row.map((cell) => {
+                                    cell.onClick = () => {
+                                    };
+                                    return (<Cell {...cell}/>);
+                                })}
+                            </tr>
+                        )
+                    })}
                 </table>
             );
         }

@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import './App.css'
 import * as MinesweeperActions from '../actions'
+import Header from '../components/Header'
 import ConfigurationMenu from '../containers/ConfigurationMenu'
 import Board from '../components/Board'
 import Leaderboard from './Leaderboard'
@@ -23,12 +24,22 @@ class App extends Component {
         // const {config, board, leaders, actions} = this.props;
         const {leaders, board} = this.props;
         return (
-            <div>
-                <ConfigurationMenu/>
-                <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
-                <Leaderboard leaders={leaders}/>
-            </div>
-        );
+
+
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <Header/>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    <div>
+
+                    <ConfigurationMenu/>
+                    <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
+                    <Leaderboard leaders={leaders}/>
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
     }
 }
 

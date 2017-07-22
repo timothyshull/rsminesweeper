@@ -1,15 +1,32 @@
 import {CELL_STATES, DEFAULT_CELL, DEFAULT_MAX_BOMB_PERCENTAGE} from "../constants/index"
 
-// TODO: x and y coords are messed up here
+// support passing a pre-generated board -> only updates count cells in that case
+// NOTE: no checks are performed to ensure width, height, and numBombs are correct when a pre-generated board is passed
 class BoardGenerator {
-    constructor(width, height, numBombs) {
-        this.width = width;
-        this.height = height;
+    /**
+     * NOTE: transpose width and height because 2d arrays are laid out so contiguous elements are in columns
+     * we need contiguous elements to be in rows for display
+     * this results in 0, 0 being the top left item in the grid
+     * @param width
+     * @param height
+     * @param numBombs
+     * @param inputBoard
+     */
+    constructor(width, height, numBombs, inputBoard) {
+        this.width = height;
+        this.height = width;
         this.numCells = width * height;
         let maxBombs = Math.floor(this.numCells * DEFAULT_MAX_BOMB_PERCENTAGE);
         this.numBombs = numBombs < maxBombs ? numBombs : maxBombs; // ensure numBombs is a reasonable value
-        this.board = [];
-        this._generateBoard();
+
+        if (typeof inputBoard === 'undefined') {
+            this.board = [];
+            this._generateBoard();
+        } else {
+            // should verify input values here
+            this.board = inputBoard;
+            this._updateEmptyCells();
+        }
     }
 
     getBoard() {
@@ -17,10 +34,9 @@ class BoardGenerator {
     }
 
     _generateBoard() {
-        // TODO: this indexing is confusing, check
-        for (let i = 0; i < this.height; i++) {
+        for (let i = 0; i < this.width; i++) {
             this.board[i] = [];
-            for (let j = 0; j < this.width; j++) {
+            for (let j = 0; j < this.height; j++) {
                 this.board[i].push(BoardGenerator._getCell(j, i));
             }
         }
@@ -35,8 +51,7 @@ class BoardGenerator {
         while (this.numBombs > 0) {
             const index = this._getRandomIndex();
             const coords = this._indexToCoordinates(index);
-            // TODO: x and y here
-            let cell = this.board[coords[1]][coords[0]];
+            let cell = this.board[coords[0]][coords[1]];
             if (cell.cellState !== CELL_STATES[9]) {
                 cell.cellState = CELL_STATES[9];
                 this.numBombs -= 1;
@@ -48,28 +63,25 @@ class BoardGenerator {
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
                 // if not a bomb
-                // TODO: x and y here
-                if (this.board[j][i].cellState !== CELL_STATES[9]) {
+                if (this.board[i][j].cellState !== CELL_STATES[9]) {
                     this._setAdjacentBombCount(i, j);
                 }
             }
         }
     }
 
-    // TODO: here
     _setAdjacentBombCount(xPos, yPos) {
         let bombCount = 0;
         for (let i = -1; i < 2; ++i) {
             for (let j = -1; j < 2; ++j) {
                 let xPos2 = xPos + i;
                 let yPos2 = yPos + j;
-                if (this._inBounds(xPos2, yPos2) && this.board[yPos2][xPos2].cellState === CELL_STATES[9]) {
+                if (this._inBounds(xPos2, yPos2) && this.board[xPos2][yPos2].cellState === CELL_STATES[9]) {
                     bombCount += 1;
                 }
             }
         }
-        // TODO: here
-        this.board[yPos][xPos].cellState = CELL_STATES[bombCount];
+        this.board[xPos][yPos].cellState = CELL_STATES[bombCount];
     }
 
     _inBounds(xPos, yPos) {
@@ -87,12 +99,7 @@ class BoardGenerator {
     }
 
     static _getCell(x, y) {
-        let cell = Object.create(DEFAULT_CELL);
-        cell.xPos = x;
-        cell.yPos = y;
-
-        // cell.cellState = this._isBomb();
-        return cell;
+        return Object.assign({}, DEFAULT_CELL, {xPos: x, yPos: y});
     }
 }
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 
 class OptionsMenu extends Component {
@@ -54,8 +55,9 @@ class OptionsMenu extends Component {
     }
 }
 
+// TODO: move to constants file
 OptionsMenu.propTypes = {
-    onClose: React.PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
 };
 
 export default OptionsMenu

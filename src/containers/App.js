@@ -3,10 +3,9 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import './App.css'
 import * as MinesweeperActions from '../actions'
-// import ConfigurationMenu from '../containers/ConfigurationMenu'
-// import DisplayedBoard from '../containers/DisplayedBoard'
+import ConfigurationMenu from '../containers/ConfigurationMenu'
 import Board from '../components/Board'
-// import Leaderboard from './Leaderboard'
+import Leaderboard from './Leaderboard'
 import FastClick from 'fastclick'
 import {APP_PROPS} from '../constants/PropTypeDefs'
 
@@ -16,19 +15,18 @@ const noop = () => {
 class App extends Component {
     static propTypes = APP_PROPS;
 
-    componentDidMount() {
+    static componentDidMount() {
         FastClick.attach(document.body);
     }
 
     render() {
         // const {config, board, leaders, actions} = this.props;
-        const board = this.props.board;
+        const {leaders, board} = this.props;
         return (
             <div>
-                {/*<ConfigurationMenu/>*/}
-                {/*<DisplayedBoard/>*/}
-                <Board board={board} onCellClick={this.actions ? this.actions.revealCell : noop}/>
-                {/*<Leaderboard leaders={leaders}/>*/}
+                <ConfigurationMenu/>
+                <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
+                <Leaderboard leaders={leaders}/>
             </div>
         );
     }

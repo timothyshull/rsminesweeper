@@ -7,12 +7,13 @@ class Leader extends Component {
 
     render() {
         const {rank, name, time} = this.props;
+        const title = name + " - ";  // TODO: append - time of completion
         // scores-rank = scores-number
         return (
-            <span title="JKMercury - 22 hours ago">
-                <div className="scores-rank">{rank}</div>
-                <div className="scores-name">{name}</div>
-                <div className="scores-time">{time}</div>
+            <span title={title}>
+                <div className="leaderRank">{rank}</div>
+                <div className="leaderName">{name}</div>
+                <div className="leaderTime">{time}</div>
             </span>
         )
     };

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {CELL_PROPS} from '../constants/PropTypeDefs'
-import {revealCell} from '../actions'
+import {revealAndCheck} from '../actions'
 import classNames from 'classnames'
 import './Cell.css'
 
@@ -11,7 +11,6 @@ class Cell extends Component {
 
     constructor(props) {
         super(props);
-        // this.state = {isToggleOn: true};
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -30,7 +29,7 @@ class Cell extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    onClick: bindActionCreators(revealCell, dispatch)
+    onClick: bindActionCreators(revealAndCheck, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(Cell)

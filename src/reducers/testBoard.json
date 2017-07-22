@@ -1,0 +1,62 @@
+[
+  [
+    {
+      "xPos": 0,
+      "yPos": 0,
+      "revealed": true,
+      "cellState": "empty"
+    },
+    {
+      "xPos": 1,
+      "yPos": 0,
+      "revealed": true,
+      "cellState": "one"
+    },
+    {
+      "xPos": 2,
+      "yPos": 0,
+      "revealed": true,
+      "cellState": "two"
+    }
+  ],
+  [
+    {
+      "xPos": 0,
+      "yPos": 1,
+      "revealed": true,
+      "cellState": "three"
+    },
+    {
+      "xPos": 1,
+      "yPos": 1,
+      "revealed": true,
+      "cellState": "four"
+    },
+    {
+      "xPos": 2,
+      "yPos": 1,
+      "revealed": true,
+      "cellState": "five"
+    }
+  ],
+  [
+    {
+      "xPos": 0,
+      "yPos": 2,
+      "revealed": true,
+      "cellState": "six"
+    },
+    {
+      "xPos": 1,
+      "yPos": 2,
+      "revealed": true,
+      "cellState": "seven"
+    },
+    {
+      "xPos": 2,
+      "yPos": 2,
+      "revealed": true,
+      "cellState": "eight"
+    }
+  ]
+]

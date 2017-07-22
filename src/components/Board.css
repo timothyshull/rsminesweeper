@@ -1,0 +1,14 @@
+/* TODO: need to fix these and apply .Board class */
+table {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td.last {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}

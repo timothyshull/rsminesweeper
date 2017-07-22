@@ -12,3 +12,4 @@ It is a WIP and is being completed as part a programming challenge.
 - Smiley Blur by Hea Poh Lin from the Noun Project
 - Smiley Laugh by Hea Poh Lin from the Noun Project
 - naval mine by Oksana Latysheva from the Noun Project
+- https://material.io/icons/#ic_flag

@@ -4,6 +4,14 @@
     /*font-family: sans-serif;*/
 /*}*/
 
+@font-face {
+    font-family: 'digital_readout_uprightRg';
+    src: url('./assets/digitalreadoutupright-webfont.woff2') format('woff2'),
+    url('./assets/digitalreadoutupright-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body {
     background-color: #f9f9f9;
     border: 0;

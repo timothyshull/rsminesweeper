@@ -44,8 +44,32 @@ class Cell extends Component {
 
     handleClick(e) {
         e.preventDefault();
-        this.props.onClick(this.props);
+        if (this.props.flagged && !e.metaKey) { return; } // don't reveal if flagged
+        let modifier;
+        if (e.metaKey) {
+            // flag
+            modifier = 'flagged';
+        } else if (e.altKey) {
+            // question
+            modifier = 'questionMarked';
+        } else {
+            modifier = 'none';
+        }
+        this.props.onClick(Object.assign({}, this.props, {modifier: modifier}));
     }
+
+    // handleKeyPress = (event) => {
+    //     if(event.key == 'Enter'){
+    //         console.log('enter press here! ')
+    //     }
+    // }
+    // render: function(){
+    //     return(
+    //         <div>
+    //             <input type="text" id="one" onKeyPress={this.handleKeyPress} />
+    //         </div>
+    //     );
+    // }
 
     getSvgWrapper(innerSvgFunc, width, height, viewBox) {
         return (
@@ -220,7 +244,9 @@ class Cell extends Component {
         } else {
             if (this.props.flagged) {
                 // TODO: check this and fix, add handling for flagging
-                markupFunc = this.getSvgWrapper;
+                markupFunc = this.getFlaggedCellMarkup;
+            } else if (this.props.questionMarked) {
+                markupFunc = this.getQuestionCellMarkup;
             }
         }
         return this.getSvgWrapper(markupFunc.bind(this), width, height, viewBox)

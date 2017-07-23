@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 
 class ControlsMenu extends Component {
     render() {
-        return (<table id="controls" className="dialog">
+        return (<table className="dialog">
             <tbody>
             <tr className="dialog-title">
                 <td>Controls</td>
                 <td>
-                    <span id="controls-close" className="dialog-close" title="close this box" onClick={this.props.onClose}>×</span>
+                    <span className="dialog-close" title="close this box" onClick={this.props.onClose}>×</span>
                 </td>
             </tr>
             <tr>
@@ -43,7 +44,7 @@ class ControlsMenu extends Component {
 }
 
 ControlsMenu.propTypes = {
-    onClose: React.PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
 };
 
 export default ControlsMenu

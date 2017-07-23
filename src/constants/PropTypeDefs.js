@@ -8,6 +8,7 @@ export const CELL_PROPS = {
     yPos: PropTypes.number.isRequired,
     revealed: PropTypes.bool.isRequired,
     flagged: PropTypes.bool.isRequired,
+    questionMarked: PropTypes.bool.isRequired,
     cellState: PropTypes.oneOf(CELL_STATES).isRequired
 };
 

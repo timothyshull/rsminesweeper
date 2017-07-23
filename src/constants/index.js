@@ -20,6 +20,7 @@ export const DEFAULT_CELL = {
     yPos: 0,
     revealed: false,
     flagged: false,
+    questionMarked: false,
     cellState: CELL_STATES[0]
 };
 

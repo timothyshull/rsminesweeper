@@ -26,15 +26,15 @@ class App extends Component {
         return (
 
 
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <Header/>
-            <main class="mdl-layout__content">
-                <div class="page-content">
+            <main className="mdl-layout__content">
+                <div className="page-content">
                     <div>
 
                     <ConfigurationMenu/>
                     <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
-                    <Leaderboard leaders={leaders}/>
+                    {/*<Leaderboard leaders={leaders}/>*/}
                     </div>
                 </div>
             </main>

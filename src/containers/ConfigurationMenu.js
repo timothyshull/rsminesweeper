@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import OptionsMenu from '../components/OptionsMenu'
 import DisplayMenu from '../components/DisplayMenu'
+import ControlsMenu from '../components/ControlsMenu'
 
 const noModal = 0;
 const optionsModal = 1;
@@ -33,17 +34,18 @@ class ConfigurationMenu extends Component {
         this.setState({showModal: noModal});
     }
 
+    // TODO: make this better
     render() {
         let modal = '';
         switch (this.state.showModal) {
             case optionsModal:
-                modal = <form id="options-form"><OptionsMenu onClose={this.closeModal}/></form>;
+                modal = <form><OptionsMenu onClose={this.closeModal}/></form>;
                 break;
             case displayModal:
-                modal = <form id="options-form"><DisplayMenu onClose={this.closeModal}/></form>;
+                modal = <form><DisplayMenu onClose={this.closeModal}/></form>;
                 break;
             case controlsModal:
-                modal = <form id="options-form"><OptionsMenu onClose={this.closeModal}/></form>;
+                modal = <form><ControlsMenu onClose={this.closeModal}/></form>;
                 break;
             default:
                 break;
@@ -52,7 +54,7 @@ class ConfigurationMenu extends Component {
         return (
             <div className="ConfigurationMenu">
                 <button name="gameOptions" onClick={this.handleOptionsClick}>Game Options</button>
-                <button name="displayOptions" onClick={this.handleDisplayClick}>Display Options</button>
+                {/*<button name="displayOptions" onClick={this.handleDisplayClick}>Display Options</button>*/}
                 <button name="controls" onClick={this.handleControlsClick}>Controls</button>
                 <div>{modal}</div>
             </div>

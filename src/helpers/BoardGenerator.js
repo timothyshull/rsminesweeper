@@ -74,6 +74,7 @@ class BoardGenerator {
         let bombCount = 0;
         for (let i = -1; i < 2; ++i) {
             for (let j = -1; j < 2; ++j) {
+                // if (i === 0 && j === 0) { continue; }
                 let xPos2 = xPos + i;
                 let yPos2 = yPos + j;
                 if (this._inBounds(xPos2, yPos2) && this.board[xPos2][yPos2].cellState === CELL_STATES[9]) {

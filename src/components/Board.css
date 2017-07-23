@@ -1,11 +1,17 @@
 /* TODO: need to fix these and apply .Board class */
 .Board {
-    text-align: center;
+    background-color: #BDBDBD;
+    /*text-align: center;*/
     margin: auto;
     /*background-color: rgb(188, 188, 188);*/
     /*border: 5px solid #585858;*/
     /*border-radius: 5px;*/
     /*padding: 5px 5px 0 5px;*/
+}
+
+.BoardHeader > div {
+    display: inline-block;
+    width: 33%;
 }
 
 table {
@@ -25,3 +31,4 @@ td.last {
     margin: 0;
     border: 0;
 }
+

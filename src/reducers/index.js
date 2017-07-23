@@ -2,15 +2,15 @@ import { combineReducers } from 'redux'
 import boardDescription from './boardDescription'
 import board from './board'
 import gameStatus from './gameStatus'
-import leaders from './leaders'
-import visibilityFilter from './visibilityFilter'
+import timer from './timer'
+import bombCounter from './bombCounter'
 
 const rootReducer = combineReducers({
     boardDescription,
     board,
     gameStatus,
-    leaders,
-    visibilityFilter
+    timer,
+    bombCounter
 });
 
 export default rootReducer

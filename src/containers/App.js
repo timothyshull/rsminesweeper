@@ -8,7 +8,6 @@ import ConfigurationMenu from '../containers/ConfigurationMenu'
 import Board from '../components/Board'
 import FastClick from 'fastclick'
 import {APP_PROPS} from '../constants/PropTypeDefs'
-import componentHandler from 'material-design-lite'
 
 const noop = () => {
 };

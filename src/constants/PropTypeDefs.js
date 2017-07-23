@@ -24,7 +24,13 @@ export const LEADER_PROPS = {
 
 export const LEADERS_LIST_PROPS = PropTypes.arrayOf(PropTypes.shape(LEADER_PROPS).isRequired).isRequired;
 
-export const TIMER_PROPS = PropTypes.shape({currentTime: PropTypes.number.isRequired}).isRequired;
+export const TIMER_PROPS = PropTypes.shape({
+    running: PropTypes.bool.isRequired,
+    currentTime: PropTypes.number.isRequired,
+    intervalId: PropTypes.number.isRequired
+}).isRequired;
+
+export const BOMB_COUNTER_PROPS = PropTypes.shape({numBombs: PropTypes.number.isRequired}).isRequired;
 
 export const APP_PROPS = PropTypes.shape({
     config: PropTypes.object.isRequired,

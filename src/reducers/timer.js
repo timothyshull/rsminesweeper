@@ -1,40 +1,35 @@
-// Action Creators
+import * as BoardActions from '../constants/BoardActions'
+import {DEFAULT_TIMER} from '../constants'
 
-
-
-
-// Reducer / Store
-
-const initialState = {
-    startedAt: undefined,
-    stoppedAt: undefined,
-    baseTime: undefined
-};
-
-function reducer(state = initialState, action) {
+const timer = (state = DEFAULT_TIMER, action) => {
     switch (action.type) {
-        case "RESET_TIMER":
+        case BoardActions.RESET_TIMER:
             return {
                 ...state,
-                baseTime: 0,
-                startedAt: state.startedAt ? action.now : undefined,
-                stoppedAt: state.stoppedAt ? action.now : undefined
+                running: false,
+                currentTime: 0,
+                intervalId: undefined
             };
-        case "START_TIMER":
+        case BoardActions.START_TIMER:
             return {
                 ...state,
-                baseTime: action.baseTime,
-                startedAt: action.now,
-                stoppedAt: undefined
+                running: true,
+                intervalId: action.intervalId
             };
-        case "STOP_TIMER":
+        case BoardActions.INCREMENT_TIMER:
             return {
                 ...state,
-                stoppedAt: action.now
+                running: true,
+                currentTime: state.currentTime + 1
+            };
+        case BoardActions.STOP_TIMER:
+            return {
+                ...state,
+                running: false
             };
         default:
             return state;
     }
-}
+};
 
-const store = createStore(reducer);
+export default timer

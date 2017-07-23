@@ -1,4 +1,5 @@
 import * as BoardActions from '../constants/BoardActions'
+import {DEFAULT_TIMER_INTERVAL} from "../constants/index"
 import {isGameLost, isGameWon} from '../helpers/stateHelpers'
 import * as GameStatuses from '../constants/GameStatuses'
 
@@ -11,6 +12,8 @@ export const revealCell = cell => {
 };
 
 export const flagCell = cell => {
+    // if cell.flagged, then decrement counter (flagCell called for already flagged cell means its unflagging cell)
+    // else increment counter (NOTE: can verify does not pass config num bombs)
     return {
         type: BoardActions.FLAG_CELL,
         cell
@@ -46,9 +49,75 @@ export const gameWon = gameStatus => {
     }
 };
 
+// timer actions
+export const startTimer = (dispatch, getState) => {
+    const state = getState();
+    const interval = setInterval(() => {
+        dispatch({type: BoardActions.INCREMENT_TIMER});
+    }, DEFAULT_TIMER_INTERVAL);
+
+    return {
+        type: BoardActions.START_TIMER,
+        intervalId: interval,
+        state
+    };
+};
+
+export const stopTimer = (state) => {
+    clearInterval(state.timer.intervalId);
+    return {
+        type: BoardActions.STOP_TIMER,
+        state
+    };
+};
+
+export const incrementTimer = (timerInfo) => {
+    return {
+        type: BoardActions.INCREMENT_TIMER,
+        timerInfo
+    }
+};
+
+export const resetTimer = (timerInfo) => {
+    return {
+        type: BoardActions.RESET_TIMER,
+        timerInfo
+    }
+};
+
+const gameCompletionFactory = (getState, dispatch) => (() => {
+        const state = getState();
+        const gameIsLost = isGameLost(state.board);
+        const gameIsWon = isGameWon(state.board);
+
+        if (gameIsLost) {
+            dispatch(gameLost(state));
+            dispatch(revealAllCells(state));
+        } else if (gameIsWon) {
+            dispatch(gameWon(state));
+        }
+
+        if (gameIsLost || gameIsWon) {
+            dispatch(stopTimer(state));
+        }
+    }
+);
+
+const clickDispatchFactory = (actionFunc, cell) => {
+    return (dispatch, getState) => {
+        return new Promise(resolve => {
+            if (!getState().timer.running) {
+                dispatch(startTimer(dispatch, getState));
+            }
+            resolve();
+        }).then(() => {
+            dispatch(actionFunc(cell))
+        }).then(gameCompletionFactory(getState, dispatch));
+    }
+};
+
 // filter click actions to handle dispatch through a single point rather
 // than passing many click handlers
-// TODO: clean this pattern up
 export const revealAndCheck = cell => {
     let actionFunc = revealCell;
     if (cell.modifier === 'flagged') {
@@ -56,52 +125,9 @@ export const revealAndCheck = cell => {
     } else if (cell.modifier === 'questionMarked') {
         actionFunc = markAsQuestionable;
     }
-    return (dispatch, getState) => {
-        const f1 = resolve => {
-            resolve(dispatch(actionFunc(cell)))
-        };
-        const f2 = () => {
-            const state = getState();
-            if (isGameLost(state.board)) {
-                dispatch(gameLost(state));
-                dispatch(revealAllCells(state));
-            } else if (isGameWon(state.board)) {
-                dispatch(gameWon(state));
-            }
-        };
-        return new Promise(f1).then(f2);
-    };
+    return clickDispatchFactory(actionFunc, cell);
 };
 
-// timer actions
-export const startTimer = (baseTime = 0) => {
-    return {
-        type: BoardActions.START_TIMER,
-        baseTime: baseTime,
-        now: new Date().getTime()
-    };
-};
-
-export const stopTimer = () => {
-    return {
-        type: BoardActions.STOP_TIMER,
-        now: new Date().getTime()
-    };
-};
-
-export const incrementTimer = () => {
-    return {
-        type: BoardActions.INCREMENT_TIMER,
-        now: new Date().getTime()
-    }
-};
-
-export const resetTimer = () => {
-    return {
-        type: BoardActions.RESET_TIMER,
-        now: new Date().getTime()
-    }
-};
 
 // counter actions
 export const incrementCounter = () => {

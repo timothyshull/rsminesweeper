@@ -10,6 +10,7 @@ class Cell extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        // TODO: move to constants and reuse across components
         this.svgConstants = {
             width: "16px",
             height: "16px",
@@ -57,19 +58,6 @@ class Cell extends Component {
         }
         this.props.onClick(Object.assign({}, this.props, {modifier: modifier}));
     }
-
-    // handleKeyPress = (event) => {
-    //     if(event.key == 'Enter'){
-    //         console.log('enter press here! ')
-    //     }
-    // }
-    // render: function(){
-    //     return(
-    //         <div>
-    //             <input type="text" id="one" onKeyPress={this.handleKeyPress} />
-    //         </div>
-    //     );
-    // }
 
     getSvgWrapper(innerSvgFunc, width, height, viewBox) {
         return (
@@ -243,7 +231,6 @@ class Cell extends Component {
             markupFunc = () => (this.getRevealedCellFromState(state))
         } else {
             if (this.props.flagged) {
-                // TODO: check this and fix, add handling for flagging
                 markupFunc = this.getFlaggedCellMarkup;
             } else if (this.props.questionMarked) {
                 markupFunc = this.getQuestionCellMarkup;

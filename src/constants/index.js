@@ -4,6 +4,9 @@ export const DEFAULT_WIDTH = 30;
 export const DEFAULT_HEIGHT = 16;
 export const DEFAULT_NUM_BOMBS = 99;
 
+const MILLIS_PER_SEC = 1000;
+export const DEFAULT_TIMER_INTERVAL = 1 * MILLIS_PER_SEC;
+
 export const DEFAULT_CONFIG = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,
@@ -20,7 +23,9 @@ export const DEFAULT_COUNTER = {
 };
 
 export const DEFAULT_TIMER = {
-    currentTime: 0
+    running: false,
+    currentTime: 0,
+    intervalId: undefined
 };
 
 export const DEFAULT_CELL = {

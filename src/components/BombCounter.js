@@ -3,7 +3,7 @@ import './BombCounter.css'
 
 class BombCounter extends Component {
     render () {
-        return (<div className="BombCounter">100</div>);
+        return (<div className="BombCounter mdl-cell mdl-cell--4-col">100</div>);
     }
 }
 

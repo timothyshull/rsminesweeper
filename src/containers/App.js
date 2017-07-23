@@ -36,12 +36,12 @@ class App extends Component {
             </div>
         );
     }
-    // componentDidMount() {
-    //     window.componentHandler.upgradeElement(this.root);      // <==
-    // }
-    //
+    componentDidMount() {
+        window.componentHandler.upgradeAllRegistered();
+    }
+
     // componentWillUnmount() {
-    //     window.componentHandler.downgradeElements(this.root);   // <==
+    //     window.componentHandler.downgradeElements(this.root);
     // }
 }
 

@@ -5,9 +5,9 @@ import './Header.css'
 class Header extends Component {
     render() {
         return (
-            <header className="Header mdl-layout__header mdl-layout__header--waterfall">
-                <div className="mdl-layout__header-row">
-                    <span className="mdl-layout-title">minesweeper</span>
+            <header className="Header">
+                <div className="">
+                    <span className="">minesweeper</span>
                 </div>
             </header>
         );

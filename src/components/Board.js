@@ -8,7 +8,7 @@ import './Board.css'
 class Board extends Component {
     getResetButtonMarkup() {
         return (
-            <div className="mdl-cell mdl-cell--4-col">
+            <div className="">
                 <svg width="40px" height="40px" viewBox="0 0 40 40">
                     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                         <g fillRule="nonzero" fill="#FFEB3B">
@@ -41,7 +41,7 @@ class Board extends Component {
         if (board) {
             return (
                 <div className="Board">
-                    <div className="BoardHeader mdl-grid"><BombCounter/>{this.getResetButtonMarkup()}<Timer/></div>
+                    <div className="BoardHeader"><BombCounter/>{this.getResetButtonMarkup()}<Timer/></div>
                     <table onContextMenu={noopEventHandler} onDrag={noopEventHandler} onDragStart={noopEventHandler}
                            className="Board" cellSpacing={0} cellPadding={0}>
                         {board.map(row => {
@@ -65,9 +65,7 @@ class Board extends Component {
         );
     }
 
-    componentDidMount() {
-        window.componentHandler.upgradeAllRegistered();
-    }
+
 }
 
 Board.propTypes = BOARD_PROPS;

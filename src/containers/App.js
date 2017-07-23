@@ -23,10 +23,10 @@ class App extends Component {
         // const {config, board, leaders, actions} = this.props;
         const board = this.props.board;
         return (
-            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <div className="">
                 <Header/>
-                <main className="mdl-layout__content">
-                    <div className="page-content">
+                <main className="">
+                    <div className="">
                         <div>
                             <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
                             <ConfigurationMenu/>
@@ -36,13 +36,6 @@ class App extends Component {
             </div>
         );
     }
-    componentDidMount() {
-        window.componentHandler.upgradeAllRegistered();
-    }
-
-    // componentWillUnmount() {
-    //     window.componentHandler.downgradeElements(this.root);
-    // }
 }
 
 App.propTypes = APP_PROPS;

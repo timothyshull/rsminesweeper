@@ -39,7 +39,7 @@ class Timer extends React.Component {
     // }
 
     render () {
-        return (<div className="Timer mdl-cell mdl-cell--4-col">100</div>);
+        return (<div className="Timer">100</div>);
     }
 }
 

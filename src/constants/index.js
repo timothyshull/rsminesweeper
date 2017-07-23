@@ -15,6 +15,14 @@ export const DEFAULT_STATUS = {
     gameWon: false
 };
 
+export const DEFAULT_COUNTER = {
+    numBombs: DEFAULT_NUM_BOMBS
+};
+
+export const DEFAULT_TIMER = {
+    currentTime: 0
+};
+
 export const DEFAULT_CELL = {
     xPos: 0,
     yPos: 0,

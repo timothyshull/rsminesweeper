@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import OptionsMenu from '../components/OptionsMenu'
 import DisplayMenu from '../components/DisplayMenu'
 import ControlsMenu from '../components/ControlsMenu'
+import componentHandler from 'material-design-lite/material'
+
+console.dir(componentHandler);
 
 const noModal = 0;
 const optionsModal = 1;
@@ -53,13 +56,21 @@ class ConfigurationMenu extends Component {
 
         return (
             <div className="ConfigurationMenu">
-                <button name="gameOptions" onClick={this.handleOptionsClick}>Game Options</button>
+                <button name="gameOptions" className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" onClick={this.handleOptionsClick}>Game Options</button>
                 {/*<button name="displayOptions" onClick={this.handleDisplayClick}>Display Options</button>*/}
                 <button name="controls" onClick={this.handleControlsClick}>Controls</button>
                 <div>{modal}</div>
             </div>
         );
     }
+    //
+    // componentDidMount() {
+    //     window.componentHandler.upgradeElement();      // <==
+    // }
+    //
+    // componentWillUnmount() {
+    //     window.componentHandler.downgradeElements(this.root);   // <==
+    // }
 }
 
 export default ConfigurationMenu

@@ -1,18 +1,8 @@
-import React, {Component} from 'react'
-import {TIMER_PROPS} from '../constants/PropTypeDefs'
+import React from 'react'
 import {connect} from 'react-redux'
 import './Timer.css'
 
-// https://stackoverflow.com/questions/34577012/creating-a-stopwatch-with-redux
-
-class Timer extends Component {
-    // TODO: fix this conditional
-    render() {
-        return (<div className="Timer">{typeof this.props.currentTime === 'undefined' ? 0 : this.props.currentTime}</div>);
-    }
-}
-
-Timer.propTypes = TIMER_PROPS;
+const Timer = (props) => (<div className="Timer">{props.currentTime}</div>);
 
 const mapStateToProps = state => ({
     running: state.timer.running,

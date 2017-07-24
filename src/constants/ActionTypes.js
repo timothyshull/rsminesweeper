@@ -8,7 +8,6 @@ export const CREATE_NEW_BOARD = 'CREATE_NEW_BOARD';
 // counter actions
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
-export const RESET_COUNTER = 'RESET_COUNTER';
 
 // timer actions
 export const START_TIMER = 'START_TIMER';
@@ -17,7 +16,6 @@ export const INCREMENT_TIMER = 'INCREMENT_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 
 // configuration actions
-export const SET_DIFFICULTY = 'SET_DIFFICULTY';
 export const SET_BEGINNER = 'SET_BEGINNER';
 export const SET_INTERMEDIATE = 'SET_INTERMEDIATE';
 export const SET_EXPERT = 'SET_EXPERT';

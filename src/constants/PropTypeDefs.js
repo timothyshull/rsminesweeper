@@ -13,10 +13,6 @@ export const CELL_PROPS = {
     cellState: PropTypes.oneOf(CELL_STATES).isRequired
 };
 
-export const BOARD_ROW_PROPS = PropTypes.arrayOf(PropTypes.shape(CELL_PROPS).isRequired);
-
-export const BOARD_PROPS = PropTypes.arrayOf(BOARD_ROW_PROPS).isRequired;
-
 export const TIMER_PROPS = PropTypes.shape({
     running: PropTypes.bool.isRequired,
     currentTime: PropTypes.number.isRequired,

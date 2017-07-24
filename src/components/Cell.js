@@ -3,8 +3,8 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {CELL_PROPS} from '../constants/PropTypeDefs'
 import {revealAndCheck} from '../actions'
-import './Cell.css'
 import {CELL_STATES} from "../constants/index";
+import './Cell.css'
 
 class Cell extends Component {
     constructor(props) {

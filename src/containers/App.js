@@ -5,25 +5,20 @@ import FastClick from 'fastclick'
 import * as MinesweeperActions from '../actions'
 import {APP_PROPS} from '../constants/PropTypeDefs'
 import Header from '../components/Header'
-import Board from '../components/Board'
-import './App.css'
+import BoardContainer from '../containers/BoardContainer'
+
 
 class App extends Component {
-    static componentDidMount() {
+    componentDidMount() {
         FastClick.attach(document.body);
     }
 
     render() {
-        const board = this.props.board;
         return (
-            <div className="">
+            <div>
                 <Header/>
-                <main className="">
-                    <div className="">
-                        <div>
-                            <Board board={board}/>
-                        </div>
-                    </div>
+                <main>
+                    <BoardContainer/>
                 </main>
             </div>
         );

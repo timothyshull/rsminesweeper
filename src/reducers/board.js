@@ -2,26 +2,34 @@ import _ from 'lodash'
 import * as ActionTypes from '../constants/ActionTypes'
 import BoardGenerator from '../helpers/BoardGenerator'
 import * as defaults from '../constants/index'
+import {inBounds} from "../helpers/index"
 
-// import * as testBoard from './testBoard.json'
-// const initialState = testBoard;
-const initialState = new BoardGenerator(defaults.DEFAULT_WIDTH, defaults.DEFAULT_HEIGHT, defaults.DEFAULT_NUM_BOMBS).getBoard();
+/**
+ * to test manually:
+ * import * as testBoard from './testBoard.json'
+ * const initialState = new BoardGenerator(2, 2, 1, testBoard).getBoard();
+ */
+const initialState = new BoardGenerator(
+    defaults.DEFAULT_WIDTH,
+    defaults.DEFAULT_HEIGHT,
+    defaults.DEFAULT_NUM_BOMBS
+).getBoard();
 
-const mapAndUpdate = (state, xPos, yPos, updates) => {
-    return state.map(row => (row.map((cell) => {
+const mapAndUpdate = (state, cell, updates) => {
+    const xPos = cell.xPos;
+    const yPos = cell.yPos;
+    const cellMapper = (cell) => {
         if (cell.xPos === xPos && cell.yPos === yPos) {
-            return Object.assign({}, defaults.DEFAULT_CELL, cell, updates);
+            return {...cell, ...updates};
         }
         return cell;
-    })));
+    };
+    const rowMapper = (row) => (row.map(cellMapper));
+    return state.map(rowMapper);
 };
 
-// TODO: move to reuse here and in BoardGenerators
-const inBounds = (xPos, yPos, xDim, yDim) => {
-    return (0 <= xPos && xPos < xDim) && (0 <= yPos && yPos < yDim);
-};
-
-// TODO: clean this up
+// NOTE: this would be much if using a simple hash map to match objects against conditions and subsequently pass to
+// mapAndUpdate. I opted for this pattern to do something more functional.
 const revealAdjacent = (state, cell) => {
     let toReveal = [];
     toReveal.push(cell);
@@ -42,14 +50,11 @@ const revealAdjacent = (state, cell) => {
                 if (inBounds(xPos, yPos, xDim, yDim)) {
                     let tmp = state[yPos][xPos];
                     if (!_.find(toReveal, (trCell) => (trCell.xPos === tmp.xPos && trCell.yPos === tmp.yPos))) {
-                        // console.dir(tmp);
                         toReveal.push(tmp); // TODO: check this
                         if (tmp.cellState === defaults.CELL_STATES[0]) {
                             toCheck.push(tmp);
                         }
                     }
-
-
                 }
             }
         }
@@ -58,29 +63,23 @@ const revealAdjacent = (state, cell) => {
     return toReveal;
 };
 
-// TODO: more duplicate code removal
 const board = (state = initialState, action) => {
     switch (action.type) {
         case ActionTypes.REVEAL_CELL:
-            // TODO: clean this up
             if (action.cell.cellState === defaults.CELL_STATES[0]) {
                 let toReveal = revealAdjacent(state, action.cell);
-
                 for (let elem of toReveal) {
-                    state = mapAndUpdate(state, elem.xPos, elem.yPos, {revealed: true});
+                    state = mapAndUpdate(state, elem, {revealed: true});
                 }
                 return state;
             }
-            return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {revealed: true});
+            return mapAndUpdate(state, action.cell, {revealed: true});
         case ActionTypes.FLAG_CELL:
-            return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {flagged: !action.cell.flagged}); // toggle
+            return mapAndUpdate(state, action.cell, {flagged: !action.cell.flagged}); // toggle
         case ActionTypes.MARK_AS_QUESTIONABLE:
-            return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {questionMarked: !action.cell.questionMarked}); // toggle
+            return mapAndUpdate(state, action.cell, {questionMarked: !action.cell.questionMarked}); // toggle
         case ActionTypes.REVEAL_ALL_CELLS:
-            return state.map(row => (row.map((cell) => {
-                return Object.assign({}, defaults.DEFAULT_CELL, cell, {revealed: true});
-            })));
-        // TODO: pass board config from action into action and use here
+            return state.map(row => (row.map(cell => ({...defaults.DEFAULT_CELL, ...cell, revealed: true}))));
         case ActionTypes.CREATE_NEW_BOARD:
             return new BoardGenerator(
                 action.width,

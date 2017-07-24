@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {createNewBoard} from "../actions/index";
 import {ON_CLICK_PROPS} from "../constants/PropTypeDefs";
 import './ResetButton.css'
-import {createNewBoard} from "../actions/index";
+
 
 class ResetButton extends Component {
     constructor(props) {
@@ -12,21 +13,20 @@ class ResetButton extends Component {
         this.handleAnimationEnd = this.handleAnimationEnd.bind(this)
     }
 
+    // machinery to animate the reset smiley button during click
     handleAnimationEnd() {
         this.setState({animating: false})
     }
 
     componentDidMount() {
-        const button = this.refs.button;
-        button.addEventListener('animationend', this.handleAnimationEnd)
+        this.refs.button.addEventListener('animationend', this.handleAnimationEnd)
     }
 
     componentWillUnmount() {
-        const button = this.refs.button;
-        button.removeEventListener('animationend', this.handleAnimationEnd)
+        this.refs.button.removeEventListener('animationend', this.handleAnimationEnd)
     }
 
-    getSmileyMarkup() {
+    static getSmileyMarkup() {
         return (
             <svg width="40px" height="40px" viewBox="0 0 40 40">
                 <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -70,7 +70,7 @@ class ResetButton extends Component {
         );
     }
 
-    getBlurMarkup() {
+    static getBlurMarkup() {
         return (
             <svg width="40px" height="40px" viewBox="0 0 40 40">
                 <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -105,7 +105,7 @@ class ResetButton extends Component {
         );
     }
 
-    getLaughMarkup() {
+    static getLaughMarkup() {
         return (
             <svg width="40px" height="40px" viewBox="0 0 40 40">
                 <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -148,17 +148,17 @@ class ResetButton extends Component {
 
         let markupFunc;
         if (this.props.gameWon) {
-            markupFunc = this.getLaughMarkup;
+            markupFunc = ResetButton.getLaughMarkup;
         } else if (this.props.gameComplete) {
-            markupFunc = this.getBlurMarkup;
+            markupFunc = ResetButton.getBlurMarkup;
         } else {
-            markupFunc = this.getSmileyMarkup;
+            markupFunc = ResetButton.getSmileyMarkup;
         }
-        markupFunc.bind(this);
+
         return (
             <div className="ResetButton">
                 <button ref='button' onClick={onClickHandler} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}>
-                    {this.state.animating ? this.getLaughMarkup() : markupFunc()}
+                    {this.state.animating ? ResetButton.getLaughMarkup() : markupFunc()}
                 </button>
             </div>
         );

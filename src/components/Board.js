@@ -1,51 +1,32 @@
 import React, {Component} from 'react';
-import BombCounter from './BombCounter'
-import ConfigurationMenu from './ConfigurationMenu'
+import {connect} from 'react-redux'
 import Cell from './Cell';
-import Timer from './Timer'
-import {BOARD_PROPS} from '../constants/PropTypeDefs'
-import './Board.css'
-import ResetButton from "./ResetButton";
+import '../containers/BoardContainer.css'
 
-// TODO: convert to container
+
+const noopHandler = (e) => {
+    e.preventDefault()
+};
+
 class Board extends Component {
+    getTableMarkup() {
+        const cellMapper = (cell) => (<Cell {...{...cell, ...{onClick: noopHandler}}}/>);
+        const rowMapper = row => ((<tr>{row.map(cellMapper)}</tr>));
+        return (this.props.board.map(rowMapper))
+    }
+
     render() {
-        const board = this.props.board;
-        const noopHandler = (e) => {
-            e.preventDefault()
-        };
         return (
-            <div className="Board">
-                <div className="BoardHeader">
-                    <BombCounter/>
-                    <ResetButton/>
-                    <Timer/>
-                </div>
-                <table onContextMenu={noopHandler}
-                       onDrag={noopHandler}
-                       onDragStart={noopHandler}
-                       className="Board"
-                       cellSpacing={0}
-                       cellPadding={0}
-                >
-                    {board.map(row => {
-                        return (
-                            <tr>
-                                {row.map((cell) => {
-                                    cell.onClick = () => {
-                                    };
-                                    return (<Cell {...cell}/>);
-                                })}
-                            </tr>
-                        )
-                    })}
-                </table>
-                <ConfigurationMenu/>
-            </div>
+            <table className="Board" onContextMenu={noopHandler} onDrag={noopHandler} onDragStart={noopHandler}
+                   cellSpacing={0} cellPadding={0}>{this.getTableMarkup()}</table>
         );
     }
 }
 
-Board.propTypes = BOARD_PROPS;
+const mapStateToProps = state => ({
+    board: state.board
+});
 
-export default Board
+export default connect(
+    mapStateToProps
+)(Board)

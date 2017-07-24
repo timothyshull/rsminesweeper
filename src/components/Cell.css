@@ -2,73 +2,13 @@
     /*background-image: url('../../public/sprite100.gif');*/
     /*background-position: -64px -39px;*/
     /*background: url('../assets/sprite100.gif');*/
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    margin: 0;
-    border: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    line-height: 0
-}
-
-.empty {
-    background-position: 0 -23px;
-}
-
-.one {
-    background-position: -16px -23px;
-}
-
-.two {
-    background-position: -32px -23px;
-}
-
-.three {
-    background-position: -48px -23px;
-}
-
-.four {
-    background-position: -64px -23px;
-}
-
-.five {
-    background-position: -80px -23px;
-}
-
-.six {
-    background-position: -96px -23px;
-}
-
-.seven {
-    background-position: -112px -23px;
-}
-
-.eight {
-    background-position: -128px -23px;
-}
-
-.blank {
-    background-position: 0 -39px;
-}
-
-.bomb {
-    background-position: -64px -39px;
-}
-
-.bomb-flagged {
-    background-position: -16px -39px;
-}
-
-.bomb-death {
-    background-position: -32px -39px;
-}
-
-.bomb-misflagged {
-    background-position: -48px -39px;
-}
-
-.bomb-revealed {
-    background-position: -64px -39px;
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*min-width: 16px;*/
+    /*min-height: 16px;*/
+    /*margin: 0;*/
+    /*border: 0;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+    /*line-height: 0*/
 }

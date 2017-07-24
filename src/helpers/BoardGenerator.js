@@ -1,6 +1,7 @@
-import {CELL_STATES, DEFAULT_CELL, DEFAULT_MAX_BOMB_PERCENTAGE} from "../constants/index"
+import {CELL_STATES, DEFAULT_CELL, DEFAULT_MAX_BOMB_PERCENTAGE} from "../constants"
+import {inBounds} from "../helpers"
 
-// support passing a pre-generated board -> only updates count cells in that case
+// when passing a pre-generated board -> only updates the count cells in that case
 // NOTE: no checks are performed to ensure width, height, and numBombs are correct when a pre-generated board is passed
 class BoardGenerator {
     /**
@@ -10,7 +11,7 @@ class BoardGenerator {
      * @param width
      * @param height
      * @param numBombs
-     * @param inputBoard
+     * @param inputBoard - optional
      */
     constructor(width, height, numBombs, inputBoard) {
         this.width = height;
@@ -86,7 +87,7 @@ class BoardGenerator {
     }
 
     _inBounds(xPos, yPos) {
-        return (0 <= xPos && xPos < this.width) && (0 <= yPos && yPos < this.height);
+        return inBounds(xPos, yPos, this.width, this.height);
     }
 
     _getRandomIndex() {

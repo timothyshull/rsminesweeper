@@ -1,6 +1,6 @@
 import * as ActionTypes from '../constants/ActionTypes'
 import {DEFAULT_TIMER_INTERVAL} from "../constants/index"
-import {isGameLost, isGameWon} from '../helpers/stateHelpers'
+import {isGameLost, isGameWon} from '../helpers/index'
 
 // board actions
 export const revealCell = cell => {
@@ -82,13 +82,6 @@ export const stopTimer = (state) => {
     };
 };
 
-// export const incrementTimer = (timerInfo) => {
-//     return {
-//         type: ActionTypes.INCREMENT_TIMER,
-//         timerInfo
-//     }
-// };
-
 export const resetTimer = (state) => {
     clearInterval(state.timer.intervalId);
     return {
@@ -138,26 +131,6 @@ export const revealAndCheck = cell => {
         actionFunc = markAsQuestionable;
     }
     return clickDispatchFactory(actionFunc, cell);
-};
-
-
-// counter actions
-export const incrementCounter = () => {
-    return {
-        type: ActionTypes.INCREMENT_COUNTER
-    }
-};
-
-export const decrementCounter = () => {
-    return {
-        type: ActionTypes.DECREMENT_COUNTER
-    }
-};
-
-export const resetCounter = () => {
-    return {
-        type: ActionTypes.RESET_COUNTER
-    }
 };
 
 // configuration actions

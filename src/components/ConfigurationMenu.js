@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import OptionsMenu from '../components/OptionsMenu'
-import ControlsMenu from '../components/ControlsMenu'
 
 class ConfigurationMenu extends Component {
     constructor(props) {

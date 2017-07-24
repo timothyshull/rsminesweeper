@@ -1,5 +1,6 @@
 export const CELL_STATES = ['empty', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'bomb'];
 
+// defaults
 export const DEFAULT_WIDTH = 30;
 export const DEFAULT_HEIGHT = 16;
 export const DEFAULT_NUM_BOMBS = 99;

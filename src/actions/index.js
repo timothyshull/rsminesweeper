@@ -1,13 +1,11 @@
-import * as BoardActions from '../constants/BoardActions'
+import * as ActionTypes from '../constants/ActionTypes'
 import {DEFAULT_TIMER_INTERVAL} from "../constants/index"
 import {isGameLost, isGameWon} from '../helpers/stateHelpers'
-import * as GameStatuses from '../constants/GameStatuses'
-import * as ConfigurationActions from '../constants/ConfigurationActions'
 
 // board actions
 export const revealCell = cell => {
     return {
-        type: BoardActions.REVEAL_CELL,
+        type: ActionTypes.REVEAL_CELL,
         cell
     }
 };
@@ -16,42 +14,42 @@ export const flagCell = cell => {
     // if cell.flagged, then decrement counter (flagCell called for already flagged cell means its unflagging cell)
     // else increment counter (NOTE: can verify does not pass config num bombs)
     return {
-        type: BoardActions.FLAG_CELL,
+        type: ActionTypes.FLAG_CELL,
         cell
     }
 };
 
 export const markAsQuestionable = cell => {
     return {
-        type: BoardActions.MARK_AS_QUESTIONABLE,
+        type: ActionTypes.MARK_AS_QUESTIONABLE,
         cell
     }
 };
 
 export const revealAllCells = state => {
     return {
-        type: BoardActions.REVEAL_ALL_CELLS,
+        type: ActionTypes.REVEAL_ALL_CELLS,
         state
     }
 };
 
 export const createNewBoard = () => {
     return {
-        type: BoardActions.CREATE_NEW_BOARD
+        type: ActionTypes.CREATE_NEW_BOARD
     }
 };
 
 // game actions
 export const gameLost = gameStatus => {
     return {
-        type: GameStatuses.GAME_LOST,
+        type: ActionTypes.GAME_LOST,
         gameStatus
     }
 };
 
 export const gameWon = gameStatus => {
     return {
-        type: GameStatuses.GAME_WON,
+        type: ActionTypes.GAME_WON,
         gameStatus
     }
 };
@@ -60,11 +58,11 @@ export const gameWon = gameStatus => {
 export const startTimer = (dispatch, getState) => {
     const state = getState();
     const interval = setInterval(() => {
-        dispatch({type: BoardActions.INCREMENT_TIMER});
+        dispatch({type: ActionTypes.INCREMENT_TIMER});
     }, DEFAULT_TIMER_INTERVAL);
 
     return {
-        type: BoardActions.START_TIMER,
+        type: ActionTypes.START_TIMER,
         intervalId: interval,
         state
     };
@@ -73,21 +71,21 @@ export const startTimer = (dispatch, getState) => {
 export const stopTimer = (state) => {
     clearInterval(state.timer.intervalId);
     return {
-        type: BoardActions.STOP_TIMER,
+        type: ActionTypes.STOP_TIMER,
         state
     };
 };
 
 export const incrementTimer = (timerInfo) => {
     return {
-        type: BoardActions.INCREMENT_TIMER,
+        type: ActionTypes.INCREMENT_TIMER,
         timerInfo
     }
 };
 
 export const resetTimer = (timerInfo) => {
     return {
-        type: BoardActions.RESET_TIMER,
+        type: ActionTypes.RESET_TIMER,
         timerInfo
     }
 };
@@ -139,19 +137,19 @@ export const revealAndCheck = cell => {
 // counter actions
 export const incrementCounter = () => {
     return {
-        type: BoardActions.INCREMENT_COUNTER
+        type: ActionTypes.INCREMENT_COUNTER
     }
 };
 
 export const decrementCounter = () => {
     return {
-        type: BoardActions.DECREMENT_COUNTER
+        type: ActionTypes.DECREMENT_COUNTER
     }
 };
 
 export const resetCounter = () => {
     return {
-        type: BoardActions.RESET_COUNTER
+        type: ActionTypes.RESET_COUNTER
     }
 };
 

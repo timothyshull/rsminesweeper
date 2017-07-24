@@ -1,8 +1,7 @@
 import _ from 'lodash'
-import * as BoardActions from '../constants/BoardActions'
+import * as ActionTypes from '../constants/ActionTypes'
 import BoardGenerator from '../helpers/BoardGenerator'
 import * as defaults from '../constants/index'
-import {CELL_STATES} from '../constants/index';
 
 // import * as testBoard from './testBoard.json'
 // const initialState = testBoard;
@@ -46,7 +45,7 @@ const revealAdjacent = (state, cell) => {
                     if (!_.find(toReveal, (trCell) => (trCell.xPos === tmp.xPos && trCell.yPos === tmp.yPos))) {
                         // console.dir(tmp);
                         toReveal.push(tmp); // TODO: check this
-                        if (tmp.cellState === CELL_STATES[0]) {
+                        if (tmp.cellState === defaults.CELL_STATES[0]) {
                             toCheck.push(tmp);
                         }
                     }
@@ -63,9 +62,9 @@ const revealAdjacent = (state, cell) => {
 // TODO: more duplicate code removal
 const board = (state = initialState, action) => {
     switch (action.type) {
-        case BoardActions.REVEAL_CELL:
+        case ActionTypes.REVEAL_CELL:
             // TODO: clean this up
-            if (action.cell.cellState === CELL_STATES[0]) {
+            if (action.cell.cellState === defaults.CELL_STATES[0]) {
                 let toReveal = revealAdjacent(state, action.cell);
 
                 for (let elem of toReveal) {
@@ -74,15 +73,15 @@ const board = (state = initialState, action) => {
                 return state;
             }
             return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {revealed: true});
-        case BoardActions.FLAG_CELL:
+        case ActionTypes.FLAG_CELL:
             return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {flagged: !action.cell.flagged}); // toggle
-        case BoardActions.MARK_AS_QUESTIONABLE:
+        case ActionTypes.MARK_AS_QUESTIONABLE:
             return mapAndUpdate(state, action.cell.xPos, action.cell.yPos, {questionMarked: !action.cell.questionMarked}); // toggle
-        case BoardActions.REVEAL_ALL_CELLS:
+        case ActionTypes.REVEAL_ALL_CELLS:
             return state.map(row => (row.map((cell) => {
                 return Object.assign({}, defaults.DEFAULT_CELL, cell, {revealed: true});
             })));
-        case BoardActions.CREATE_NEW_BOARD:
+        case ActionTypes.CREATE_NEW_BOARD:
             return new BoardGenerator(defaults.DEFAULT_WIDTH, defaults.DEFAULT_HEIGHT, defaults.DEFAULT_NUM_BOMBS).getBoard();
         default:
             return state

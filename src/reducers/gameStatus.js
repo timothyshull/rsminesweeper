@@ -1,13 +1,13 @@
-import * as GameStatuses from '../constants/GameStatuses'
+import * as ActionTypes from '../constants/ActionTypes'
 import * as defaults from '../constants/index'
 
 const initialState = defaults.DEFAULT_STATUS;
 
 const gameStatus = (state = initialState, action) => {
     switch (action.type) {
-        case GameStatuses.GAME_LOST:
+        case ActionTypes.GAME_LOST:
             return Object.assign({}, state, {gameComplete: true});
-        case GameStatuses.GAME_WON:
+        case ActionTypes.GAME_WON:
             return Object.assign({}, state, {
                 gameWon: true,
                 gameComplete: true

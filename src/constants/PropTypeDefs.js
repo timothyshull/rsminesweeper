@@ -16,14 +16,6 @@ export const BOARD_ROW_PROPS = PropTypes.arrayOf(PropTypes.shape(CELL_PROPS).isR
 
 export const BOARD_PROPS = PropTypes.arrayOf(BOARD_ROW_PROPS).isRequired;
 
-export const LEADER_PROPS = {
-    rank: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    time: PropTypes.number.isRequired
-};
-
-export const LEADERS_LIST_PROPS = PropTypes.arrayOf(PropTypes.shape(LEADER_PROPS).isRequired).isRequired;
-
 export const TIMER_PROPS = PropTypes.shape({
     running: PropTypes.bool.isRequired,
     currentTime: PropTypes.number.isRequired,

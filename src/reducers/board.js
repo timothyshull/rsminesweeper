@@ -8,7 +8,6 @@ import * as defaults from '../constants/index'
 const initialState = new BoardGenerator(defaults.DEFAULT_WIDTH, defaults.DEFAULT_HEIGHT, defaults.DEFAULT_NUM_BOMBS).getBoard();
 
 const mapAndUpdate = (state, xPos, yPos, updates) => {
-
     return state.map(row => (row.map((cell) => {
         if (cell.xPos === xPos && cell.yPos === yPos) {
             return Object.assign({}, defaults.DEFAULT_CELL, cell, updates);
@@ -81,8 +80,33 @@ const board = (state = initialState, action) => {
             return state.map(row => (row.map((cell) => {
                 return Object.assign({}, defaults.DEFAULT_CELL, cell, {revealed: true});
             })));
+        // TODO: pass board config from action into action and use here
         case ActionTypes.CREATE_NEW_BOARD:
-            return new BoardGenerator(defaults.DEFAULT_WIDTH, defaults.DEFAULT_HEIGHT, defaults.DEFAULT_NUM_BOMBS).getBoard();
+            return new BoardGenerator(
+                action.width,
+                action.height,
+                action.numBombs
+            ).getBoard();
+        // NOTE: these actions are also handled in boardConfiguration.js -> scattering handling like this is
+        // difficult to maintain
+        case ActionTypes.SET_BEGINNER:
+            return new BoardGenerator(
+                defaults.BEGINNER_CONFIG.width,
+                defaults.BEGINNER_CONFIG.height,
+                defaults.BEGINNER_CONFIG.numBombs
+            ).getBoard();
+        case ActionTypes.SET_INTERMEDIATE:
+            return new BoardGenerator(
+                defaults.INTERMEDIATE_CONFIG.width,
+                defaults.INTERMEDIATE_CONFIG.height,
+                defaults.INTERMEDIATE_CONFIG.numBombs
+            ).getBoard();
+        case ActionTypes.SET_EXPERT:
+            return new BoardGenerator(
+                defaults.EXPERT_CONFIG.width,
+                defaults.EXPERT_CONFIG.height,
+                defaults.EXPERT_CONFIG.numBombs
+            ).getBoard();
         default:
             return state
     }

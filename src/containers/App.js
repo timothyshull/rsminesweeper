@@ -1,25 +1,19 @@
 import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import './App.css'
-import * as MinesweeperActions from '../actions'
-import Header from '../components/Header'
-import ConfigurationMenu from '../components/ConfigurationMenu'
-import Board from '../components/Board'
 import FastClick from 'fastclick'
+import * as MinesweeperActions from '../actions'
 import {APP_PROPS} from '../constants/PropTypeDefs'
-
-const noop = () => {
-};
+import Header from '../components/Header'
+import Board from '../components/Board'
+import './App.css'
 
 class App extends Component {
     static componentDidMount() {
         FastClick.attach(document.body);
     }
 
-    // NOTE: removed support of leaderboard for now
     render() {
-        // const {config, board, leaders, actions} = this.props;
         const board = this.props.board;
         return (
             <div className="">
@@ -27,8 +21,7 @@ class App extends Component {
                 <main className="">
                     <div className="">
                         <div>
-                            <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
-                            {/*<ConfigurationMenu/>*/}
+                            <Board board={board}/>
                         </div>
                     </div>
                 </main>
@@ -40,7 +33,7 @@ class App extends Component {
 App.propTypes = APP_PROPS;
 
 const mapStateToProps = state => ({
-    config: state.config,
+    boardConfiguration: state.boardConfiguration,
     board: state.board
 });
 

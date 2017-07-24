@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import {CELL_STATES} from './index'
 
+// TODO: combine any single defs that just use onClick
 
 export const CELL_PROPS = {
     onClick: PropTypes.func.isRequired,
@@ -31,6 +32,6 @@ export const APP_PROPS = PropTypes.shape({
     actions: PropTypes.object.isRequired
 });
 
-export const RESET_BUTTON_PROPS = {
+export const ON_CLICK_PROPS = {
     onClick: PropTypes.func.isRequired
 };

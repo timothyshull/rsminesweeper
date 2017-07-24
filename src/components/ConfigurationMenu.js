@@ -1,4 +1,8 @@
 import React, {Component} from 'react'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import {setDifficulty} from '../actions'
+import {ON_CLICK_PROPS} from '../constants/PropTypeDefs'
 
 class ConfigurationMenu extends Component {
     constructor(props) {
@@ -9,6 +13,7 @@ class ConfigurationMenu extends Component {
 
     handleDifficultySelection(e) {
         this.setState({difficulty: e.target.value});
+        this.props.onClick(e.target.value);
     }
 
     getOptionsMarkup() {
@@ -50,7 +55,7 @@ class ConfigurationMenu extends Component {
                 <ul>
                     <li><b>click</b> an unrevealed cell to reveal it.</li>
                     <li><b>cmd-click</b> an unrevealed cell to flag it.</li>
-                    <li><b>shift-click</b> an unrevealed cell to mark it with a question mark.</li>
+                    <li><b>alt-click</b> an unrevealed cell to mark it with a question mark.</li>
                     <li><b>click</b> the "smiley" button at the top to start a new game.</li>
                 </ul>
             </div>
@@ -67,4 +72,10 @@ class ConfigurationMenu extends Component {
     }
 }
 
-export default ConfigurationMenu
+ConfigurationMenu.propTypes = ON_CLICK_PROPS;
+
+const mapDispatchToProps = dispatch => ({
+    onClick: bindActionCreators(setDifficulty, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(ConfigurationMenu)

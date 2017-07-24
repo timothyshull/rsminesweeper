@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {RESET_BUTTON_PROPS} from "../constants/PropTypeDefs";
+import {ON_CLICK_PROPS} from "../constants/PropTypeDefs";
 import './ResetButton.css'
 import {createNewBoard} from "../actions/index";
 
@@ -13,7 +13,6 @@ class ResetButton extends Component {
     }
 
     handleAnimationEnd() {
-        console.log('animationend');
         this.setState({animating: false})
     }
 
@@ -31,7 +30,7 @@ class ResetButton extends Component {
         return (
             <svg width="40px" height="40px" viewBox="0 0 40 40">
                 <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g fillRule="nonzero" fill="#FFEB3B">
+                    <g fillRule="nonzero" fill="#4CAF50">
                         <path d="M20,40 C31.0461538,40 40,31.0461538 40,20 C40,8.95384615 31.0461538,0 20,0
                                         C8.95384615,0 0,8.95384615 0,20 C0,31.0461538 8.95384615,40 20,40 Z
                                         M3.61692308,15.8353846 C6.80307692,17.7630769 12.9353846,18.4615385
@@ -110,7 +109,7 @@ class ResetButton extends Component {
         return (
             <svg width="40px" height="40px" viewBox="0 0 40 40">
                 <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g fillRule="nonzero" fill="#4CAF50">
+                    <g fillRule="nonzero" fill="#FFEB3B">
                         <path d="M17.1092308,22.3323077 L10.9553846,20.7938462 C10.5446154,20.6892308 10.1261538,20.9415385
                                 10.0246154,21.3523077 C9.92,21.7646154 10.1723077,22.1815385 10.5830769,22.2830769
                                 L14.7184615,23.3184615 L10.4246154,25.4646154 C10.0446154,25.6538462 9.89076923,26.1169231
@@ -146,20 +145,37 @@ class ResetButton extends Component {
         const onClickHandler = () => this.props.onClick(this.props);
         const mouseDownHandler = () => this.setState({animating: true});
         const mouseUpHandler = () => this.setState({animating: false});
+
+        let markupFunc;
+        if (this.props.gameWon) {
+            markupFunc = this.getLaughMarkup;
+        } else if (this.props.gameComplete) {
+            markupFunc = this.getBlurMarkup;
+        } else {
+            markupFunc = this.getSmileyMarkup;
+        }
+        markupFunc.bind(this);
         return (
             <div className="ResetButton">
                 <button ref='button' onClick={onClickHandler} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}>
-                    {this.state.animating ? this.getLaughMarkup() : this.getSmileyMarkup()}
+                    {this.state.animating ? this.getLaughMarkup() : markupFunc()}
                 </button>
             </div>
         );
     }
 }
 
-ResetButton.propTypes = RESET_BUTTON_PROPS;
+ResetButton.propTypes = ON_CLICK_PROPS;
+
+const mapStateToProps = state => {
+    return {
+        gameComplete: state.gameStatus.gameComplete,
+        gameWon: state.gameStatus.gameWon
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
     onClick: bindActionCreators(createNewBoard, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(ResetButton)
+export default connect(mapStateToProps, mapDispatchToProps)(ResetButton)

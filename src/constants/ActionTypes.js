@@ -18,6 +18,9 @@ export const RESET_TIMER = 'RESET_TIMER';
 
 // configuration actions
 export const SET_DIFFICULTY = 'SET_DIFFICULTY';
+export const SET_BEGINNER = 'SET_BEGINNER';
+export const SET_INTERMEDIATE = 'SET_INTERMEDIATE';
+export const SET_EXPERT = 'SET_EXPERT';
 
 // game status actions
 export const GAME_LOST = 'GAME_LOST';

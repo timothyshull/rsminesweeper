@@ -5,15 +5,13 @@ import './BombCounter.css'
 
 class BombCounter extends Component {
     render () {
-        return (<div className="BombCounter">{this.props.numBombs}</div>);
+        return (<div className="BombCounter">{this.props.bombsRemaining}</div>);
     }
 }
 
 BombCounter.PropTypes = BOMB_COUNTER_PROPS;
 
-const mapStateToProps = state => ({
-    numBombs: state.bombCounter.numBombs
-});
+const mapStateToProps = state => ({bombsRemaining: state.bombCounter.bombsRemaining});
 
 export default connect(
     mapStateToProps

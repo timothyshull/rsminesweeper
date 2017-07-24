@@ -8,7 +8,19 @@ export const DEFAULT_NUM_BOMBS = 99;
 const MILLIS_PER_SEC = 1000;
 export const DEFAULT_TIMER_INTERVAL = 1 * MILLIS_PER_SEC;
 
-export const DEFAULT_CONFIG = {
+export const BEGINNER_CONFIG = {
+    width: 9,
+    height: 9,
+    numBombs: 10
+};
+
+export const INTERMEDIATE_CONFIG = {
+    width: 16,
+    height: 16,
+    numBombs: 40
+};
+
+export const EXPERT_CONFIG = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,
     numBombs: DEFAULT_NUM_BOMBS
@@ -20,7 +32,7 @@ export const DEFAULT_STATUS = {
 };
 
 export const DEFAULT_COUNTER = {
-    numBombs: DEFAULT_NUM_BOMBS
+    bombsRemaining: DEFAULT_NUM_BOMBS
 };
 
 export const DEFAULT_TIMER = {

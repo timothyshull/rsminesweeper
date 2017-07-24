@@ -6,12 +6,20 @@ const initialState = defaults.DEFAULT_STATUS;
 const gameStatus = (state = initialState, action) => {
     switch (action.type) {
         case ActionTypes.GAME_LOST:
-            return Object.assign({}, state, {gameComplete: true});
+            return {
+                gameWon: false,
+                gameComplete: true
+            };
         case ActionTypes.GAME_WON:
-            return Object.assign({}, state, {
+            return {
                 gameWon: true,
                 gameComplete: true
-            });
+            };
+        case ActionTypes.CREATE_NEW_BOARD:
+            return {
+                gameWon: false,
+                gameComplete: false
+            };
         default:
             return state
     }

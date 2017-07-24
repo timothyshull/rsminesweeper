@@ -13,9 +13,12 @@ export const revealCell = cell => {
 export const flagCell = cell => {
     // if cell.flagged, then decrement counter (flagCell called for already flagged cell means its unflagging cell)
     // else increment counter (NOTE: can verify does not pass config num bombs)
-    return {
-        type: ActionTypes.FLAG_CELL,
-        cell
+    return (dispatch, getState) => {
+        const flagAction = cell.flagged ? ActionTypes.INCREMENT_COUNTER : ActionTypes.DECREMENT_COUNTER;
+        const state = getState();
+        return new Promise(resolve => {
+            resolve(dispatch({type: ActionTypes.FLAG_CELL, cell}));
+        }).then(dispatch({type: flagAction, state}));
     }
 };
 
@@ -34,8 +37,11 @@ export const revealAllCells = state => {
 };
 
 export const createNewBoard = () => {
-    return {
-        type: ActionTypes.CREATE_NEW_BOARD
+    return (dispatch, getState) => {
+        const state = getState();
+        return new Promise(resolve => {
+            resolve(dispatch(resetTimer(getState())));
+        }).then(dispatch({type: ActionTypes.CREATE_NEW_BOARD, ...state.boardConfiguration}));
     }
 };
 
@@ -76,17 +82,18 @@ export const stopTimer = (state) => {
     };
 };
 
-export const incrementTimer = (timerInfo) => {
-    return {
-        type: ActionTypes.INCREMENT_TIMER,
-        timerInfo
-    }
-};
+// export const incrementTimer = (timerInfo) => {
+//     return {
+//         type: ActionTypes.INCREMENT_TIMER,
+//         timerInfo
+//     }
+// };
 
-export const resetTimer = (timerInfo) => {
+export const resetTimer = (state) => {
+    clearInterval(state.timer.intervalId);
     return {
         type: ActionTypes.RESET_TIMER,
-        timerInfo
+        state
     }
 };
 
@@ -153,3 +160,21 @@ export const resetCounter = () => {
     }
 };
 
+// configuration actions
+export const setDifficulty = (difficulty) => {
+    let action;
+    switch (difficulty) {
+        case 'beginner':
+            action = ActionTypes.SET_BEGINNER;
+            break;
+        case 'intermediate':
+            action = ActionTypes.SET_INTERMEDIATE;
+            break;
+        case 'expert':
+            action = ActionTypes.SET_EXPERT;
+            break;
+        default:
+            action = ActionTypes.SET_EXPERT;
+    }
+    return {type: action}
+};

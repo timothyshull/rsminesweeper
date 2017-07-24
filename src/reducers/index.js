@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import boardDescription from './boardConfiguration'
+import boardConfiguration from './boardConfiguration'
 import board from './board'
 import gameStatus from './gameStatus'
 import timer from './timer'
 import bombCounter from './bombCounter'
 
 const rootReducer = combineReducers({
-    boardDescription,
+    boardConfiguration,
     board,
     gameStatus,
     timer,

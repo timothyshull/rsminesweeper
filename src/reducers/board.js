@@ -50,7 +50,7 @@ const revealAdjacent = (state, cell) => {
                 if (inBounds(xPos, yPos, xDim, yDim)) {
                     let tmp = state[yPos][xPos];
                     if (!_.find(toReveal, (trCell) => (trCell.xPos === tmp.xPos && trCell.yPos === tmp.yPos))) {
-                        toReveal.push(tmp); // TODO: check this
+                        toReveal.push(tmp);
                         if (tmp.cellState === defaults.CELL_STATES[0]) {
                             toCheck.push(tmp);
                         }

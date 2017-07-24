@@ -4,42 +4,22 @@ import PropTypes from 'prop-types'
 
 class ControlsMenu extends Component {
     render() {
-        return (<table className="dialog">
-            <tbody>
-            <tr className="dialog-title">
-                <td>Controls</td>
-                <td>
-                    <span className="dialog-close" title="close this box" onClick={this.props.onClose}>×</span>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Desktop</strong></td>
-                <td>
-                    <ul>
-                        <li><b>Left-click</b> an empty square to reveal it.</li>
-                        <li><b>Right-click</b> (or <b>Ctrl+click</b>) an empty square to flag it.</li>
-                        <li><b>Midde-click</b> (or <b>left+right click</b>) a number to reveal<br/> its adjacent
-                            squares.
-                        </li>
-                        <li>Press <b>space</b> bar while hovering over a square to flag<br/>it or reveal its adjacent
-                            squares.
-                        </li>
-                        <li>Press <b>F2</b> to start a new game.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Mobile</strong></td>
-                <td>
-                    <ul>
-                        <li><b>Tap</b> an empty square to reveal it.</li>
-                        <li><b>Long-press</b> an empty square to flag it.</li>
-                        <li><b>Tap</b> a number to reveal its adjacent squares.</li>
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>);
+        return (
+            <table className="dialog">
+                <tbody>
+                <tr>
+                    <td>
+                        <ul>
+                            <li><b>click</b> an unrevealed cell to reveal it.</li>
+                            <li><b>cmd-click</b> an unrevealed cell to flag it.</li>
+                            <li><b>shift-click</b> an unrevealed cell to mark it with a question mark.</li>
+                            <li><b>click</b> the "smiley" button at the top to start a new game.</li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        );
     }
 }
 

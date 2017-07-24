@@ -25,7 +25,6 @@ const inBounds = (xPos, yPos, xDim, yDim) => {
 
 // TODO: clean this up
 const revealAdjacent = (state, cell) => {
-    // console.dir(toReveal);
     let toReveal = [];
     toReveal.push(cell);
 
@@ -36,7 +35,6 @@ const revealAdjacent = (state, cell) => {
     const yDim = state.length;
 
     while (toCheck.length !== 0) {
-        // console.dir(toCheck);
         let currentCell = toCheck.pop();
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
@@ -84,6 +82,8 @@ const board = (state = initialState, action) => {
             return state.map(row => (row.map((cell) => {
                 return Object.assign({}, defaults.DEFAULT_CELL, cell, {revealed: true});
             })));
+        case BoardActions.CREATE_NEW_BOARD:
+            return new BoardGenerator(defaults.DEFAULT_WIDTH, defaults.DEFAULT_HEIGHT, defaults.DEFAULT_NUM_BOMBS).getBoard();
         default:
             return state
     }

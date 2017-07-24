@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import './App.css'
 import * as MinesweeperActions from '../actions'
 import Header from '../components/Header'
-import ConfigurationMenu from '../containers/ConfigurationMenu'
+import ConfigurationMenu from '../components/ConfigurationMenu'
 import Board from '../components/Board'
 import FastClick from 'fastclick'
 import {APP_PROPS} from '../constants/PropTypeDefs'
@@ -28,7 +28,7 @@ class App extends Component {
                     <div className="">
                         <div>
                             <Board board={board} onCellClick={this.actions ? this.actions.revealAndCheck : noop}/>
-                            <ConfigurationMenu/>
+                            {/*<ConfigurationMenu/>*/}
                         </div>
                     </div>
                 </main>

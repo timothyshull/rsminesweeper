@@ -2,6 +2,7 @@ export const REVEAL_CELL = 'REVEAL_CELL';
 export const FLAG_CELL = 'FLAG_CELL';
 export const MARK_AS_QUESTIONABLE = 'MARK_AS_QUESTIONABLE';
 export const REVEAL_ALL_CELLS = 'REVEAL_ALL_CELLS';
+export const CREATE_NEW_BOARD = 'CREATE_NEW_BOARD';
 
 // related but logically separate
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';

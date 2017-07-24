@@ -38,3 +38,7 @@ export const APP_PROPS = PropTypes.shape({
     leaders: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 });
+
+export const RESET_BUTTON_PROPS = {
+    onClick: PropTypes.func.isRequired
+};

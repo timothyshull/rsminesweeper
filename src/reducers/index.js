@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import boardDescription from './boardDescription'
+import boardDescription from './boardConfiguration'
 import board from './board'
 import gameStatus from './gameStatus'
 import timer from './timer'

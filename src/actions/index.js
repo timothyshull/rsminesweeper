@@ -2,6 +2,7 @@ import * as BoardActions from '../constants/BoardActions'
 import {DEFAULT_TIMER_INTERVAL} from "../constants/index"
 import {isGameLost, isGameWon} from '../helpers/stateHelpers'
 import * as GameStatuses from '../constants/GameStatuses'
+import * as ConfigurationActions from '../constants/ConfigurationActions'
 
 // board actions
 export const revealCell = cell => {
@@ -31,6 +32,12 @@ export const revealAllCells = state => {
     return {
         type: BoardActions.REVEAL_ALL_CELLS,
         state
+    }
+};
+
+export const createNewBoard = () => {
+    return {
+        type: BoardActions.CREATE_NEW_BOARD
     }
 };
 

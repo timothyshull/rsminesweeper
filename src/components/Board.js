@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import BombCounter from './BombCounter'
+import ConfigurationMenu from './ConfigurationMenu'
 import Cell from './Cell';
 import Timer from './Timer'
 import {BOARD_PROPS} from '../constants/PropTypeDefs'
 import './Board.css'
 import ResetButton from "./ResetButton";
 
+// TODO: convert to container
 class Board extends Component {
     render() {
         const board = this.props.board;
@@ -34,7 +36,7 @@ class Board extends Component {
                             )
                         })}
                     </table>
-
+                    <ConfigurationMenu/>
                 </div>
             );
         }

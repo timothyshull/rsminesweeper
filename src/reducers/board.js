@@ -28,8 +28,8 @@ const mapAndUpdate = (state, cell, updates) => {
     return state.map(rowMapper);
 };
 
-// NOTE: this would be much if using a simple hash map to match objects against conditions and subsequently pass to
-// mapAndUpdate. I opted for this pattern to do something more functional.
+// TODO: this is ugly and inefficient -> better if mutating state and using some sort of hash table to store objects
+// in place of toReveal array
 const revealAdjacent = (state, cell) => {
     let toReveal = [];
     toReveal.push(cell);
@@ -44,7 +44,9 @@ const revealAdjacent = (state, cell) => {
         let currentCell = toCheck.pop();
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
-                if (i === 0 && j === 0) { continue; }
+                if (i === 0 && j === 0) {
+                    continue;
+                }
                 const xPos = currentCell.xPos + i;
                 const yPos = currentCell.yPos + j;
                 if (inBounds(xPos, yPos, xDim, yDim)) {

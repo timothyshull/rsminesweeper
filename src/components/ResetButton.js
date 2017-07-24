@@ -6,7 +6,16 @@ import {ON_CLICK_PROPS} from "../constants/PropTypeDefs";
 import {svgConstants, svgColors} from "../constants/svgConstants"
 import './ResetButton.css'
 
-
+/**
+ * the ResetButton has 3 long term states and 1 temporary state
+ * long term:
+ *   green and smiling during game play
+ *   yellow and laughing for a win
+ *   red and squiggly for a loss
+ * temporary:
+ *   yellow and laughing between mouse down and mouse up
+ * resets to green on game restart
+ */
 class ResetButton extends Component {
     constructor(props) {
         super(props);

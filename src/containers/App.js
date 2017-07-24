@@ -3,7 +3,6 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import FastClick from 'fastclick'
 import * as MinesweeperActions from '../actions'
-import {APP_PROPS} from '../constants/PropTypeDefs'
 import Header from '../components/Header'
 import BoardContainer from '../containers/BoardContainer'
 
@@ -24,8 +23,6 @@ class App extends Component {
         );
     }
 }
-
-App.propTypes = APP_PROPS;
 
 const mapStateToProps = state => ({
     boardConfiguration: state.boardConfiguration,

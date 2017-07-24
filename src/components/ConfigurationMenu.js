@@ -12,6 +12,7 @@ class ConfigurationMenu extends Component {
         this.handleDifficultySelection = this.handleDifficultySelection.bind(this)
     }
 
+    // onClick is mapped to the setDifficulty action creator -> stopping propagation here results in improper behavior
     handleDifficultySelection(e) {
         this.setState({difficulty: e.target.value});
         this.props.onClick(e.target.value);

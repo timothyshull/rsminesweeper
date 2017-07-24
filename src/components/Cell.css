@@ -1,14 +1,3 @@
 .Cell {
-    /*background-image: url('../../public/sprite100.gif');*/
-    /*background-position: -64px -39px;*/
-    /*background: url('../assets/sprite100.gif');*/
-    /*width: 16px;*/
-    /*height: 16px;*/
-    /*min-width: 16px;*/
-    /*min-height: 16px;*/
-    /*margin: 0;*/
-    /*border: 0;*/
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*line-height: 0*/
+    border: 1px solid #000000;
 }

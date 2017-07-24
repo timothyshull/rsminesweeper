@@ -8,7 +8,9 @@ const bombCounter = (state = initialState, action) => {
         case ActionTypes.INCREMENT_COUNTER:
             return {bombsRemaining: state.bombsRemaining + 1};
         case ActionTypes.DECREMENT_COUNTER:
-            return {bombsRemaining: state.bombsRemaining - 1 >= 0 ? state.bombsRemaining - 1 : 0};
+            // NOTE: removed bombsRemaining: state.bombsRemaining - 1 >= 0 ? state.bombsRemaining - 1 : 0
+            // results in a bug allowing user to decrement to 0, add more flags, then increment past num bombs on board
+            return {bombsRemaining: state.bombsRemaining - 1};
         case ActionTypes.SET_BEGINNER:
             return {bombsRemaining: defaults.BEGINNER_CONFIG.numBombs};
         case ActionTypes.SET_INTERMEDIATE:

@@ -7,12 +7,14 @@ import {CELL_STATES} from "../constants/index";
 import {svgConstants, svgColors} from "../constants/svgConstants"
 import './Cell.css'
 
+
 class Cell extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
 
         this.state = {
+            // simplifies cell color checking
             svgVars: {
                 width: "16px",
                 height: "16px",
@@ -29,9 +31,12 @@ class Cell extends Component {
         };
     }
 
+    // converts click modifiers to strings for comparison in the action handler
     handleClick(e) {
         e.preventDefault();
-        if (this.props.flagged && !e.metaKey) { return; } // don't reveal if flagged
+        if (this.props.flagged && !e.metaKey) {
+            return;
+        } // don't reveal if flagged
         let modifier;
         if (e.metaKey) {
             // flag
@@ -45,9 +50,11 @@ class Cell extends Component {
         this.props.onClick(Object.assign({}, this.props, {modifier: modifier}));
     }
 
+    // receives a function to call that returns the markup for the the current cell and wraps with svg & table markup
     getSvgWrapper(innerSvgFunc, width, height, viewBox) {
         return (
-            <td onClick={this.props.revealed ? () => {} : this.handleClick}>
+            <td className="Cell" onClick={this.props.revealed ? () => {
+            } : this.handleClick}>
                 <svg width={width} height={height} viewBox={viewBox}>
                     {innerSvgFunc()}
                 </svg>
@@ -56,10 +63,13 @@ class Cell extends Component {
     }
 
     getUnrevealedCellMarkup(overlayMarkup) {
+        // previously added rx={svgConstants.rx} -> removed
         return (
-            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none} fillRule={svgConstants.fillRule}>
-                <rect fill={svgColors.darkGrey} x={svgConstants.zero} y={svgConstants.zero} width={svgConstants.commonDims}
-                      height={svgConstants.commonDims} rx={svgConstants.rx}/>
+            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none}
+               fillRule={svgConstants.fillRule}>
+                <rect fill={svgColors.darkGrey} x={svgConstants.zero} y={svgConstants.zero}
+                      width={svgConstants.commonDims}
+                      height={svgConstants.commonDims}/>
                 {overlayMarkup}
             </g>
         )
@@ -99,9 +109,11 @@ class Cell extends Component {
 
     getRevealedWrapperMarkup(innerMarkup) {
         return (
-            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none} fillRule={svgConstants.fillRule}>
+            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none}
+               fillRule={svgConstants.fillRule}>
                 <g>
-                    <rect fill={svgColors.lightGrey} x={svgConstants.zero} y={svgConstants.zero} width={svgConstants.commonDims}
+                    <rect fill={svgColors.lightGrey} x={svgConstants.zero} y={svgConstants.zero}
+                          width={svgConstants.commonDims}
                           height={svgConstants.commonDims}/>
                     {innerMarkup}
                 </g>
@@ -115,7 +127,8 @@ class Cell extends Component {
             if (num !== 9) {
                 const fill = this.state.svgVars[num];
                 innerMarkup = (
-                    <text fontFamily={svgConstants.fontFamily} fontSize={svgConstants.fontSize} fontWeight={svgConstants.fontWeight}
+                    <text fontFamily={svgConstants.fontFamily} fontSize={svgConstants.fontSize}
+                          fontWeight={svgConstants.fontWeight}
                           letterSpacing={svgConstants.letterSpacing} fill={fill}>
                         <tspan x="17" y="38">{num}</tspan>
                     </text>
@@ -127,7 +140,6 @@ class Cell extends Component {
         return this.getRevealedWrapperMarkup(innerMarkup);
     }
 
-    // bomb markup
     getBombMarkup() {
         return (
             <g>

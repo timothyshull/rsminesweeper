@@ -3,6 +3,11 @@ import {DEFAULT_TIMER_INTERVAL} from "../constants/index"
 import {isGameLost, isGameWon} from '../helpers/index'
 
 // board actions
+/**
+ * simply reveals an unrevealed cell
+ * @param cell
+ * @returns {{type, cell: *}}
+ */
 export const revealCell = cell => {
     return {
         type: ActionTypes.REVEAL_CELL,
@@ -10,9 +15,13 @@ export const revealCell = cell => {
     }
 };
 
+/**
+ * FLAG_CELL toggles a flagged cell inside the reducer
+ * this action creator initiates toggling of flagged prop then increments or decrements the counter accordingly
+ * @param cell -> the target of the flag operation
+ * @returns {function(*, *)}
+ */
 export const flagCell = cell => {
-    // if cell.flagged, then decrement counter (flagCell called for already flagged cell means its unflagging cell)
-    // else increment counter (NOTE: can verify does not pass config num bombs)
     return (dispatch, getState) => {
         const flagAction = cell.flagged ? ActionTypes.INCREMENT_COUNTER : ActionTypes.DECREMENT_COUNTER;
         const state = getState();
@@ -22,6 +31,11 @@ export const flagCell = cell => {
     }
 };
 
+/**
+ * adds a question mark icon to a cell
+ * @param cell
+ * @returns {{type, cell: *}}
+ */
 export const markAsQuestionable = cell => {
     return {
         type: ActionTypes.MARK_AS_QUESTIONABLE,
@@ -29,6 +43,11 @@ export const markAsQuestionable = cell => {
     }
 };
 
+/**
+ * reveals all of the cells on the entire board
+ * @param state
+ * @returns {{type, state: *}}
+ */
 export const revealAllCells = state => {
     return {
         type: ActionTypes.REVEAL_ALL_CELLS,
@@ -36,6 +55,10 @@ export const revealAllCells = state => {
     }
 };
 
+/**
+ * creates a new game board based on the current state of the boardConfiguration data
+ * @returns {function(*, *)}
+ */
 export const createNewBoard = () => {
     return (dispatch, getState) => {
         const state = getState();
@@ -46,6 +69,11 @@ export const createNewBoard = () => {
 };
 
 // game actions
+/**
+ * called when a bomb is revealed
+ * @param gameStatus
+ * @returns {{type, gameStatus: *}}
+ */
 export const gameLost = gameStatus => {
     return {
         type: ActionTypes.GAME_LOST,
@@ -53,6 +81,12 @@ export const gameLost = gameStatus => {
     }
 };
 
+/**
+ * called when all of the non-bomb cells are revealed
+ * NOTE: not dependent on flags
+ * @param gameStatus
+ * @returns {{type, gameStatus: *}}
+ */
 export const gameWon = gameStatus => {
     return {
         type: ActionTypes.GAME_WON,
@@ -61,6 +95,12 @@ export const gameWon = gameStatus => {
 };
 
 // timer actions
+/**
+ * starts the timer by triggering the non
+ * @param dispatch
+ * @param getState
+ * @returns {{type, intervalId: number, state: *}}
+ */
 export const startTimer = (dispatch, getState) => {
     const state = getState();
     const interval = setInterval(() => {
@@ -74,6 +114,10 @@ export const startTimer = (dispatch, getState) => {
     };
 };
 
+/**
+ * @param state
+ * @returns {{type, state: *}}
+ */
 export const stopTimer = (state) => {
     clearInterval(state.timer.intervalId);
     return {
@@ -82,6 +126,10 @@ export const stopTimer = (state) => {
     };
 };
 
+/**
+ * @param state
+ * @returns {{type, state: *}}
+ */
 export const resetTimer = (state) => {
     clearInterval(state.timer.intervalId);
     return {
@@ -90,7 +138,12 @@ export const resetTimer = (state) => {
     }
 };
 
-const gameCompletionFactory = (getState, dispatch) => (() => {
+/**
+ * used in _clickDispatchFactory to check the board status (e.g. won/lost) after modifying a cell
+ * @param getState
+ * @param dispatch
+ */
+const _gameCompletionHelper = (getState, dispatch) => (() => {
         const state = getState();
         const gameIsLost = isGameLost(state.board);
         const gameIsWon = isGameWon(state.board);
@@ -108,7 +161,14 @@ const gameCompletionFactory = (getState, dispatch) => (() => {
     }
 );
 
-const clickDispatchFactory = (actionFunc, cell) => {
+/**
+ * returns a function that constructs a Promise to first start the timer if necessary, then call the appropriate cell
+ * modifying (e.g. reveal, flag, question) action, and then check if the game status has changed
+ * @param actionFunc
+ * @param cell
+ * @returns {function(*=, *=)}
+ */
+const _clickDispatchFactory = (actionFunc, cell) => {
     return (dispatch, getState) => {
         return new Promise(resolve => {
             if (!getState().timer.running) {
@@ -117,12 +177,19 @@ const clickDispatchFactory = (actionFunc, cell) => {
             resolve();
         }).then(() => {
             dispatch(actionFunc(cell))
-        }).then(gameCompletionFactory(getState, dispatch));
+        }).then(_gameCompletionHelper(getState, dispatch));
     }
 };
 
 // filter click actions to handle dispatch through a single point rather
 // than passing many click handlers
+/**
+ * this function is the main entry point for action handling when a cell is clicked
+ * the calling click handler (in Cell) adds a .modifier field that signifies if the click was to reveal, flag, or
+ * add a question mark
+ * the result is called through the above helper functions
+ * @param cell
+ */
 export const revealAndCheck = cell => {
     let actionFunc = revealCell;
     if (cell.modifier === 'flagged') {
@@ -130,10 +197,15 @@ export const revealAndCheck = cell => {
     } else if (cell.modifier === 'questionMarked') {
         actionFunc = markAsQuestionable;
     }
-    return clickDispatchFactory(actionFunc, cell);
+    return _clickDispatchFactory(actionFunc, cell);
 };
 
 // configuration actions
+/**
+ * reads the passed difficulty and triggers the corresponding event for the reducer
+ * @param difficulty
+ * @returns {{type: *}}
+ */
 export const setDifficulty = (difficulty) => {
     let action;
     switch (difficulty) {

@@ -3,14 +3,25 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {createNewBoard} from "../actions/index";
 import {ON_CLICK_PROPS} from "../constants/PropTypeDefs";
+import {svgConstants, svgColors} from "../constants/svgConstants"
 import './ResetButton.css'
 
 
 class ResetButton extends Component {
     constructor(props) {
         super(props);
-        this.state = {animating: false};
-        this.handleAnimationEnd = this.handleAnimationEnd.bind(this)
+        this.state = {
+            animating: false,
+            svgVars: {
+                width: "35px",
+                height: "32px",
+                viewBox: "0 0 40 40",
+            }
+        };
+        this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
+        this.getSmileyMarkup = this.getSmileyMarkup.bind(this);
+        this.getLaughMarkup = this.getLaughMarkup.bind(this);
+        this.getBlurMarkup = this.getBlurMarkup.bind(this);
     }
 
     // machinery to animate the reset smiley button during click
@@ -26,11 +37,13 @@ class ResetButton extends Component {
         this.refs.button.removeEventListener('animationend', this.handleAnimationEnd)
     }
 
-    static getSmileyMarkup() {
+    getSmileyMarkup() {
+        const svgVars = this.state.svgVars;
         return (
-            <svg width="40px" height="40px" viewBox="0 0 40 40">
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g fillRule="nonzero" fill="#4CAF50">
+            <svg width={svgVars.width} height={svgVars.height} viewBox={svgVars.viewBox}>
+                <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none}
+                   fillRule={svgConstants.frEvenOdd}>
+                    <g fillRule={svgConstants.frNonZero} fill={svgColors.green}>
                         <path d="M20,40 C31.0461538,40 40,31.0461538 40,20 C40,8.95384615 31.0461538,0 20,0
                                         C8.95384615,0 0,8.95384615 0,20 C0,31.0461538 8.95384615,40 20,40 Z
                                         M3.61692308,15.8353846 C6.80307692,17.7630769 12.9353846,18.4615385
@@ -70,11 +83,13 @@ class ResetButton extends Component {
         );
     }
 
-    static getBlurMarkup() {
+    getBlurMarkup() {
+        const svgVars = this.state.svgVars;
         return (
-            <svg width="40px" height="40px" viewBox="0 0 40 40">
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g fillRule="nonzero" fill="#C62828">
+            <svg width={svgVars.width} height={svgVars.height} viewBox={svgVars.viewBox}>
+                <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none}
+                   fillRule={svgConstants.frEvenOdd}>
+                    <g fillRule={svgConstants.frNonZero} fill={svgColors.red}>
                         <path d="M20,0 C8.95384615,0 0,8.95384615 0,20 C0,31.0461538 8.95384615,40 20,40 C31.0461538,40
                                 40,31.0461538 40,20 C40,8.95384615 31.0461538,0 20,0 Z M20,36.9230769
                                 C10.6692308,36.9230769 3.07692308,29.3307692 3.07692308,20 C3.07692308,18.56
@@ -105,11 +120,13 @@ class ResetButton extends Component {
         );
     }
 
-    static getLaughMarkup() {
+    getLaughMarkup() {
+        const svgVars = this.state.svgVars;
         return (
-            <svg width="40px" height="40px" viewBox="0 0 40 40">
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g fillRule="nonzero" fill="#FFEB3B">
+            <svg width={svgVars.width} height={svgVars.height} viewBox={svgVars.viewBox}>
+                <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none}
+                   fillRule={svgConstants.frEvenOdd}>
+                    <g fillRule={svgConstants.frNonZero} fill={svgColors.yellow}>
                         <path d="M17.1092308,22.3323077 L10.9553846,20.7938462 C10.5446154,20.6892308 10.1261538,20.9415385
                                 10.0246154,21.3523077 C9.92,21.7646154 10.1723077,22.1815385 10.5830769,22.2830769
                                 L14.7184615,23.3184615 L10.4246154,25.4646154 C10.0446154,25.6538462 9.89076923,26.1169231
@@ -142,23 +159,24 @@ class ResetButton extends Component {
     }
 
     render() {
-        const onClickHandler = () => this.props.onClick(this.props);
         const mouseDownHandler = () => this.setState({animating: true});
-        const mouseUpHandler = () => this.setState({animating: false});
+        const mouseUpHandler = () => {
+            this.props.onClick(this.props);
+            this.setState({animating: false});
+        };
 
-        let markupFunc;
+        let markupFunc = this.getSmileyMarkup;
         if (this.props.gameWon) {
-            markupFunc = ResetButton.getLaughMarkup;
+            markupFunc = this.getLaughMarkup;
         } else if (this.props.gameComplete) {
-            markupFunc = ResetButton.getBlurMarkup;
-        } else {
-            markupFunc = ResetButton.getSmileyMarkup;
+            markupFunc = this.getBlurMarkup;
         }
+        markupFunc.bind(this);
 
         return (
             <div className="ResetButton">
-                <button ref='button' onClick={onClickHandler} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}>
-                    {this.state.animating ? ResetButton.getLaughMarkup() : markupFunc()}
+                <button ref='button' onMouseDown={mouseDownHandler.bind(this)} onMouseUp={mouseUpHandler.bind(this)}>
+                    {this.state.animating ? this.getLaughMarkup() : markupFunc()}
                 </button>
             </div>
         );

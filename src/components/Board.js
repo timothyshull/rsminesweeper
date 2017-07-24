@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Cell from './Cell';
-import '../containers/BoardContainer.css'
+import './Board.css'
 
 
 const noopHandler = (e) => {
@@ -17,8 +17,10 @@ class Board extends Component {
 
     render() {
         return (
-            <table className="Board" onContextMenu={noopHandler} onDrag={noopHandler} onDragStart={noopHandler}
+            <div className="Board">
+            <table onContextMenu={noopHandler} onDrag={noopHandler} onDragStart={noopHandler}
                    cellSpacing={0} cellPadding={0}>{this.getTableMarkup()}</table>
+            </div>
         );
     }
 }

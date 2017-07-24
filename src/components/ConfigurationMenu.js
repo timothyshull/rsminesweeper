@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {setDifficulty} from '../actions'
 import {ON_CLICK_PROPS} from '../constants/PropTypeDefs'
+import './ConfigurationMenu.css'
 
 class ConfigurationMenu extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class ConfigurationMenu extends Component {
 
     getOptionsMarkup() {
         return (
-            <div>
+            <div className="OptionsMenu">
                 <form>
                     <div className="radio">
                         <label>
@@ -51,7 +52,7 @@ class ConfigurationMenu extends Component {
 
     static getInstructionsMarkup() {
         return (
-            <div>
+            <div className="InstructionsMenu">
                 <ul>
                     <li><b>click</b> an unrevealed cell to reveal it.</li>
                     <li><b>cmd-click</b> an unrevealed cell to flag it.</li>

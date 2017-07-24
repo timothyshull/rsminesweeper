@@ -1,0 +1,9 @@
+.ConfigurationMenu {
+    padding: 0 5px 10px 5px;
+}
+
+.InstructionsMenu > ul {
+    margin-top: 8px;
+    margin-bottom: 10px;
+    padding-left: 18px;
+}

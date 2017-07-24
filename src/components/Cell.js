@@ -4,42 +4,28 @@ import {connect} from 'react-redux'
 import {CELL_PROPS} from '../constants/PropTypeDefs'
 import {revealAndCheck} from '../actions'
 import {CELL_STATES} from "../constants/index";
+import {svgConstants, svgColors} from "../constants/svgConstants"
 import './Cell.css'
 
 class Cell extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
-        // TODO: move to constants and reuse across components
-        this.svgConstants = {
-            width: "16px",
-            height: "16px",
-            viewBox: "0 0 52 52",
-            none: "none",
-            strokeWidth: 1,
-            fillRule: "evenodd",
-            zero: 0,
-            commonDims: 52,
-            rx: 8,
-            fontFamily: "Roboto-Regular, Roboto",
-            fontSize: "36",
-            fontWeight: "normal",
-            letterSpacing: "-0.0712871328",
-            transformDirective: "translate(6.000000, 6.000000)"
-        };
-        this.colorConstants = {
-            black: "#000000",
-            darkFill: "#6C6C6C",
-            lightFill: "#BDBDBD",
-            red: "#C62828",
-            fill1: "#00BCD4",
-            fill2: "#4CAF50",
-            fill3: "#C62828",
-            fill4: "#303F9F",
-            fill5: "#880E4F",
-            fill6: "#00838F",
-            fill7: "#000000",
-            fill8: "#6C6C6C"
+
+        this.state = {
+            svgVars: {
+                width: "16px",
+                height: "16px",
+                viewBox: "0 0 52 52",
+                1: "#00BCD4", // fill1
+                2: "#4CAF50", // fill2
+                3: "#C62828", // fill3
+                4: "#303F9F", // fill4
+                5: "#880E4F", // fill5
+                6: "#00838F", // fill6
+                7: "#000000", // fill7
+                8: "#6C6C6C" // fill8 / darkFill
+            }
         };
     }
 
@@ -70,63 +56,67 @@ class Cell extends Component {
     }
 
     getUnrevealedCellMarkup(overlayMarkup) {
-        const svgCs = this.svgConstants;
         return (
-            <g stroke={svgCs.none} strokeWidth={svgCs.strokeWidth} fill={svgCs.none} fillRule={svgCs.fillRule}>
-                <rect fill={this.colorConstants.darkFill} x={svgCs.zero} y={svgCs.zero} width={svgCs.commonDims}
-                      height={svgCs.commonDims} rx={svgCs.rx}/>
+            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none} fillRule={svgConstants.fillRule}>
+                <rect fill={svgColors.darkGrey} x={svgConstants.zero} y={svgConstants.zero} width={svgConstants.commonDims}
+                      height={svgConstants.commonDims} rx={svgConstants.rx}/>
                 {overlayMarkup}
             </g>
         )
     }
 
     getFlaggedCellMarkup() {
-        const svgCs = this.svgConstants;
         const overlayMarkup = (
-            <g transform={svgCs.transformDirective}>
+            <g transform={svgConstants.transformDirective}>
                 <polygon points="0 0 40 0 40 40 0 40"/>
-                <polygon fill={this.colorConstants.black} fillRule={svgCs.none}
-                         points="24 10 23.3333333 6.66666667 8.33333333 6.66666667 8.33333333 35 11.6666667 35 11.6666667 23.3333333 21 23.3333333 21.6666667 26.6666667 33.3333333 26.6666667 33.3333333 10"/>
+                <polygon fill={svgColors.black} fillRule={svgConstants.none}
+                         points="24 10 23.3333333 6.66666667 8.33333333 6.66666667 8.33333333 35 11.6666667 35
+                         11.6666667 23.3333333 21 23.3333333 21.6666667 26.6666667 33.3333333 26.6666667 33.3333333 10"/>
             </g>
         );
         return this.getUnrevealedCellMarkup(overlayMarkup);
     }
 
     getQuestionCellMarkup() {
-        const svgCs = this.svgConstants;
         const overlayMarkup = (
-            <g transform={svgCs.transformDirective}>
+            <g transform={svgConstants.transformDirective}>
                 <polygon points="0 0 40 0 40 40 0 40"/>
                 <path
-                    d="M18.3333333,30 L21.6666667,30 L21.6666667,26.6666667 L18.3333333,26.6666667 L18.3333333,30 Z M20,3.33333333 C10.8,3.33333333 3.33333333,10.8 3.33333333,20 C3.33333333,29.2 10.8,36.6666667 20,36.6666667 C29.2,36.6666667 36.6666667,29.2 36.6666667,20 C36.6666667,10.8 29.2,3.33333333 20,3.33333333 Z M20,33.3333333 C12.65,33.3333333 6.66666667,27.35 6.66666667,20 C6.66666667,12.65 12.65,6.66666667 20,6.66666667 C27.35,6.66666667 33.3333333,12.65 33.3333333,20 C33.3333333,27.35 27.35,33.3333333 20,33.3333333 Z M20,10 C16.3166667,10 13.3333333,12.9833333 13.3333333,16.6666667 L16.6666667,16.6666667 C16.6666667,14.8333333 18.1666667,13.3333333 20,13.3333333 C21.8333333,13.3333333 23.3333333,14.8333333 23.3333333,16.6666667 C23.3333333,20 18.3333333,19.5833333 18.3333333,25 L21.6666667,25 C21.6666667,21.25 26.6666667,20.8333333 26.6666667,16.6666667 C26.6666667,12.9833333 23.6833333,10 20,10 Z"
-                    fill={this.colorConstants.black} fillRule={svgCs.fillRule}/>
+                    d="M18.3333333,30 L21.6666667,30 L21.6666667,26.6666667 L18.3333333,26.6666667 L18.3333333,30 Z
+                    M20,3.33333333 C10.8,3.33333333 3.33333333,10.8 3.33333333,20 C3.33333333,29.2 10.8,36.6666667
+                    20,36.6666667 C29.2,36.6666667 36.6666667,29.2 36.6666667,20 C36.6666667,10.8 29.2,3.33333333
+                    20,3.33333333 Z M20,33.3333333 C12.65,33.3333333 6.66666667,27.35 6.66666667,20 C6.66666667,12.65
+                    12.65,6.66666667 20,6.66666667 C27.35,6.66666667 33.3333333,12.65 33.3333333,20 C33.3333333,27.35
+                    27.35,33.3333333 20,33.3333333 Z M20,10 C16.3166667,10 13.3333333,12.9833333 13.3333333,16.6666667
+                    L16.6666667,16.6666667 C16.6666667,14.8333333 18.1666667,13.3333333 20,13.3333333 C21.8333333,13.3333333
+                    23.3333333,14.8333333 23.3333333,16.6666667 C23.3333333,20 18.3333333,19.5833333 18.3333333,25
+                    L21.6666667,25 C21.6666667,21.25 26.6666667,20.8333333 26.6666667,16.6666667 C26.6666667,12.9833333
+                    23.6833333,10 20,10 Z" fill={svgColors.black} fillRule={svgConstants.fillRule}/>
             </g>
         );
         return this.getUnrevealedCellMarkup(overlayMarkup);
     }
 
     getRevealedWrapperMarkup(innerMarkup) {
-        const svgCs = this.svgConstants;
         return (
-            <g stroke={svgCs.none} strokeWidth={svgCs.strokeWidth} fill={svgCs.none} fillRule={svgCs.fillRule}>
+            <g stroke={svgConstants.none} strokeWidth={svgConstants.strokeWidth} fill={svgConstants.none} fillRule={svgConstants.fillRule}>
                 <g>
-                    <rect fill={this.colorConstants.lightFill} x={svgCs.zero} y={svgCs.zero} width={svgCs.commonDims}
-                          height={svgCs.commonDims}/>
+                    <rect fill={svgColors.lightGrey} x={svgConstants.zero} y={svgConstants.zero} width={svgConstants.commonDims}
+                          height={svgConstants.commonDims}/>
                     {innerMarkup}
                 </g>
             </g>
         );
     }
 
-    getRevealedCellFromState(num, fill) {
-        const svgCs = this.svgConstants;
+    getRevealedCellFromState(num) {
         let innerMarkup = null;
         if (num) {
             if (num !== 9) {
-                const fill = this.colorConstants["fill" + num];
+                const fill = this.state.svgVars[num];
                 innerMarkup = (
-                    <text fontFamily={svgCs.fontFamily} fontSize={svgCs.fontSize} fontWeight={svgCs.fontWeight}
-                          letterSpacing={svgCs.letterSpacing} fill={fill}>
+                    <text fontFamily={svgConstants.fontFamily} fontSize={svgConstants.fontSize} fontWeight={svgConstants.fontWeight}
+                          letterSpacing={svgConstants.letterSpacing} fill={fill}>
                         <tspan x="17" y="38">{num}</tspan>
                     </text>
                 );
@@ -143,14 +133,14 @@ class Cell extends Component {
             <g>
                 <g>
                     <g transform="translate(0.193120, 0.000000)">
-                        <path fill={this.colorConstants.red} d="M23.776,18.6c-1.044-0.43-2.11-0.423-3.168,0.022c-1.057,0.444-1.823,1.206-2.28,2.268
+                        <path fill={svgColors.red} d="M23.776,18.6c-1.044-0.43-2.11-0.423-3.168,0.022c-1.057,0.444-1.823,1.206-2.28,2.268
 				c-0.445,1.066-0.454,2.146-0.027,3.212c0.427,1.065,1.175,1.824,2.222,2.255c0.521,0.215,1.046,0.321,1.572,0.321
 				c0.538,0,1.076-0.111,1.611-0.337c1.058-0.444,1.82-1.21,2.264-2.272c0.457-1.062,0.471-2.142,0.043-3.208
 				C25.584,19.796,24.832,19.035,23.776,18.6z M25.5,23.861c-0.396,0.948-1.046,1.601-1.988,1.997
 				c-0.944,0.396-1.859,0.4-2.799,0.015c-0.927-0.382-1.562-1.026-1.94-1.969c-0.378-0.944-0.371-1.863,0.023-2.807
 				c0.406-0.944,1.062-1.596,2.005-1.992c0.48-0.202,0.951-0.303,1.421-0.303c0.454,0,0.905,0.094,1.362,0.282
 				c0.938,0.386,1.576,1.033,1.955,1.976C25.918,22.002,25.906,22.918,25.5,23.861z"/>
-                        <path fill={this.colorConstants.red} d="M45.281,26.268c-0.428-0.609-1.008-0.987-1.723-1.123l-3.416-0.652
+                        <path fill={svgColors.red} d="M45.281,26.268c-0.428-0.609-1.008-0.987-1.723-1.123l-3.416-0.652
 				c0.098-2.605-0.379-5.092-1.424-7.439l2.932-2.166c0.59-0.437,0.95-1.042,1.07-1.797c0.114-0.727-0.045-1.402-0.472-2.007
 				l-0.282-0.399c-0.426-0.603-1.007-0.977-1.737-1.114c-0.726-0.103-1.392,0.065-1.981,0.5l-2.764,2.043
 				c-1.561-1.724-3.377-3.06-5.435-3.998l0.914-4.471c0.149-0.73,0.017-1.426-0.392-2.066c-0.395-0.617-0.956-1.006-1.67-1.159
@@ -202,7 +192,7 @@ class Cell extends Component {
 				c-0.51,0.357-1.042,0.477-1.631,0.364l-5.57-1.062c-0.586-0.112-1.03-0.417-1.365-0.939c-0.352-0.5-0.468-1.034-0.359-1.634
 				l0.089-0.485c0.109-0.602,0.41-1.067,0.919-1.426c0.364-0.255,0.748-0.381,1.166-0.381c0.139,0,0.282,0.014,0.43,0.043
 				l5.57,1.062c0.59,0.112,1.049,0.412,1.395,0.905C45.192,27.081,45.299,27.626,45.189,28.23z"/>
-                        <path fill={this.colorConstants.red} d="M40,23.875c0,0.231-0.005,0.462-0.015,0.691c-2.86-1.066-4.559,0.182-4.86,2.111
+                        <path fill={svgColors.red} d="M40,23.875c0,0.231-0.005,0.462-0.015,0.691c-2.86-1.066-4.559,0.182-4.86,2.111
 	            c-0.188,1.197,0.812,3.197,3.699,3.327C36.366,36.152,30.32,40.5,23.25,40.5c-0.578,0-1.149-0.029-1.712-0.086
 	            c1.087-4.227-0.804-4.755-1.663-4.977c-1.695-0.438-3.062,0.938-3.616,3.55C10.499,36.358,6.5,30.58,6.5,23.875
 	            c0-0.47,0.02-0.935,0.059-1.395c3.316,0.52,4.379-0.417,4.707-1.675c0.246-0.944-0.14-3.055-3.198-3.961
@@ -215,9 +205,9 @@ class Cell extends Component {
     }
 
     render() {
-        const width = this.svgConstants.width;
-        const height = this.svgConstants.height;
-        const viewBox = this.svgConstants.viewBox;
+        const width = this.state.svgVars.width;
+        const height = this.state.svgVars.height;
+        const viewBox = this.state.svgVars.viewBox;
 
         let markupFunc = this.getUnrevealedCellMarkup;
 

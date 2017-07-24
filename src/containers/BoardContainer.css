@@ -1,34 +1,13 @@
 /* TODO: need to fix these and apply .Board class */
 .BoardContainer {
-    background-color: #BDBDBD;
-    /*text-align: center;*/
     margin: auto;
-    /*background-color: rgb(188, 188, 188);*/
-    /*border: 5px solid #585858;*/
-    /*border-radius: 5px;*/
-    /*padding: 5px 5px 0 5px;*/
+}
+
+.BoardHeader {
+    margin: 10px 10px 0 10px;
 }
 
 .BoardHeader > div {
     display: inline-block;
     width: 33%;
 }
-
-table {
-    /*padding: 0;*/
-    margin: 0;
-    /*border: 0;*/
-    border-collapse: collapse;
-    table-layout: fixed;
-    background-color: #BDBDBD;
-    border: 5px solid #6C6C6C;
-    border-radius: 5px;
-    padding: 5px 5px 0 5px;
-}
-
-td.last {
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-

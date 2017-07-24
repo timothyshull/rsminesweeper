@@ -1,0 +1,12 @@
+.Board {
+    text-align: center;
+}
+
+.Board > table {
+    margin: 10px auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    line-height: 0;
+    border: 4px solid #6C6C6C;
+}

@@ -1,3 +1,7 @@
 .ResetButton {
     text-align: center;
 }
+
+.ResetButton > button {
+    padding: 1px;
+}
